@@ -3,28 +3,52 @@
     spaceman.stop();
     window.onkeypress = function(e) {
         if (e.keyCode === 37) {
-            console.log('left');
-            spaceman.walkLeft();
-            setTimeout(function() {
-                spaceman.stop();
-            }, 300);
-            camera.stepLeft();
+            goLeft();
         } else if (e.keyCode === 38) {
-            console.log('up');
-            camera.stepUp();
+            goUp();
         } else if (e.keyCode === 39) {
-            spaceman.walkRight();
+            goRight();
+
+        } else if (e.keyCode === 40) {
+            goDown();
+        } else {
+            console.log('Unknown key code', e.keyCode);
+        }
+    };
+
+    var hammertime = Hammer(document.getElementById('viewport'));
+    hammertime.on('swipeleft', goLeft);
+    hammertime.on('swipeup', goUp);
+    hammertime.on('swiperight', goRight);
+    hammertime.on('swipedown', goDown);
+
+    function goLeft() {
+        console.log('left');
+        spaceman.walkLeft();
+        setTimeout(function() {
+            spaceman.stop();
+        }, 300);
+        camera.stepLeft();
+    }
+
+    function goUp() {
+        console.log('up');
+        camera.stepUp();
+    }
+
+    function goRight() {
+
+        spaceman.walkRight();
             setTimeout(function() {
                 spaceman.stop();
             }, 300);
             camera.stepRight();
             console.log('right');
 
-        } else if (e.keyCode === 40) {
-            camera.stepDown();
-            console.log('down');
-        } else {
-            console.log('Unknown key code', e.keyCode);
-        }
+    }
+
+    function goDown() {
+        camera.stepDown();
+        console.log('down');
     }
 })();
