@@ -51,4 +51,6 @@
         camera.stepDown();
         console.log('down');
     }
+
+    map.generateMap();
 })();
