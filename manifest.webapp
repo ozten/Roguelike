@@ -1,0 +1,9 @@
+{
+    "name": "Roguelike",
+    "icons": {
+        "256": "/img/icon/Roguelike256.png",
+        "128": "/img/icon/Roguelike128.png",
+        "60": "/img/icon/Roguelike60.png",
+        "30": "/img/icon/Roguelike30.png"
+    }
+}
