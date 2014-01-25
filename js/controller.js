@@ -32,27 +32,41 @@ if (!window.console) {
         if (e.keyCode === 37 ||
             e.keyCode === 97) {
             console.log('Going Left');
+            e.preventDefault();
             goLeft();
         } else if (e.keyCode === 38 ||
             e.keyCode === 119) {
+            e.preventDefault();
             goUp();
         } else if (e.keyCode === 39 ||
             e.keyCode === 100) {
+            e.preventDefault();
             goRight();
 
         } else if (e.keyCode === 40 ||
             e.keyCode === 115) {
+            e.preventDefault();
             goDown();
         } else {
             console.log('Unknown key code', e.keyCode);
         }
+        return false;
     };
 
-    var hammertime = Hammer(document.getElementById('viewport'));
-    hammertime.on('swipeleft', goLeft);
-    hammertime.on('swipeup', goUp);
-    hammertime.on('swiperight', goRight);
-    hammertime.on('swipedown', goDown);
+
+    var viewport = document.getElementById('viewport');
+    viewport.addEventListener('touchstart', function(e) {
+        log('touchstart', e);
+    }, false);
+    viewport.addEventListener('touchmove', function(e) {
+        log('touchstart', e);
+    }, false);
+    viewport.addEventListener('touchend', function(e) {
+        log('touchend', e);
+    }, false);
+    viewport.addEventListener('touchcancel', function(e) {
+        log('touctouchcancelhstart', e);
+    }, false);
 
     function goLeft() {
         if (map.moveLeftAllowed()) {
@@ -78,6 +92,8 @@ if (!window.console) {
     }
 
     function goRight() {
+
+
         if (map.moveRightAllowed()) {
             map.moveRight();
             spaceman.walkRight();
