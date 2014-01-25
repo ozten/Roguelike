@@ -1,0 +1,34 @@
+body {
+  margin: 0px;
+  padding: 0px;
+    overflow: hidden;
+}
+h1 {
+  position: absolute;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+#viewport {
+  /*width: 100%;
+  height: 100%;*/
+  /*border: solid 1px black;*/
+
+  position: relative;
+}
+#canvas {
+
+  transform: translate(0px, 0);
+}
+#background {
+
+}
+#movie, #movie2 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#character {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}

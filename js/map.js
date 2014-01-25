@@ -2,8 +2,12 @@
     window.map = {};
 
     var _map = []; // Map Data
-    var width = 80;
-    var height = 40;
+    var width = map.width = 80;
+    var height = map.height = 40;
+    var startX;
+    var startY;
+    var curX;
+    var curY;
     var MIN_BORDER_DIST = 5;
     var RND_WALK_STEPS = (width * height) * 0.75;
 
@@ -16,9 +20,17 @@
     var SPACE = 'S';
     var PATH = ' ';
 
+    map.startPos = function() {
+        return [startX, startY];
+    };
+
+    map.tileType = function(x, y) {
+        return _map[y][x];
+    };
+
     map.generateMap = function() {
         var start = new Date();
-        var startX, startY, curX, curY;
+
 
         var pickX = true;
 
@@ -48,7 +60,7 @@
 
         for (var row = 0; row < height; row++) {
             _map[row] = [];
-console.log(row);
+            console.log(row);
             for (var col = 0; col < width; col++) {
 
                 _map[row][col] = SPACE;
@@ -144,13 +156,68 @@ _map[2][1] = 'H';
         console.log(_map);
         window._map = _map;
 
-
+        _map[startY][startX] = '@';
+        curX = startX;
+        curY = startY;
         console.log('Finished in ', new Date() - start, 'milliseconds');
 
     };
 
-    map.moveAllowed = function(from, to) {
+    function walkableTile(x, y) {
+        return [' ', '@'].indexOf(_map[y][x]) !== -1;
+    }
 
+    map.moveUpAllowed = function() {
+        try {
+            console.log('Move up allowed? from', curX, curY, ' to ', _map[curY - 1][curX]);
+            return walkableTile(curX, curY - 1);
+        } catch (e) {
+            return false;
+        }
+    };
+
+    map.moveRightAllowed = function() {
+        try {
+            console.log('Move right allowed? from', curX, curY, ' to ', _map[curY][curX + 1]);
+            return walkableTile(curX + 1, curY);
+        } catch (e) {
+            return false;
+        }
+    };
+
+    map.moveDownAllowed = function() {
+        try {
+            console.log('Move down allowed? from', curX, curY, ' to ', _map[curY + 1][curX]);
+            return walkableTile(curX, curY + 1);
+        } catch (e) {
+            return false;
+        }
+    };
+
+    map.moveLeftAllowed = function() {
+        try {
+            console.log('Move left allowed? from', curX, curY, ' to ', _map[curY][curX -1]);
+            return walkableTile(curX - 1, curY);
+        } catch (e) {
+            return false;
+        }
+    };
+
+    map.moveUp = function() {
+        curY -= 1;
+    };
+
+    map.moveRight = function() {
+        curX += 1;
+    };
+
+    map.moveDown = function() {
+        curY += 1;
+    };
+
+
+    map.moveLeft = function() {
+        curX -= 1;
     };
 
     function rand(max) {
