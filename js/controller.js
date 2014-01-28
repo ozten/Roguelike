@@ -49,13 +49,18 @@ if (!window.console) {
             goDown();
         } else {
             console.log('Unknown key code', e.keyCode);
+            return true;
         }
         return false;
     };
 
+    //document.getElementById('viewport').mozRequestFullScreen();
 
+    /*
     var viewport = document.getElementById('viewport');
     viewport.addEventListener('touchstart', function(e) {
+        log(typeof e.preventDefault);
+        e.preventDefault();
         log('touchstart', e);
     }, false);
     viewport.addEventListener('touchmove', function(e) {
@@ -67,7 +72,44 @@ if (!window.console) {
     viewport.addEventListener('touchcancel', function(e) {
         log('touctouchcancelhstart', e);
     }, false);
+*/
 
+    //alert(document.getElementById('viewport'));
+
+    var hammer = Hammer(document.getElementById('viewport'));
+
+    hammer.on('swiperight', function(e) {
+        e.preventDefault();
+        e.gesture.preventDefault();
+        goRight();
+    });
+    hammer.on('swipeup', function(e) {
+        e.preventDefault();
+        e.gesture.preventDefault();
+        goUp();
+    });
+    hammer.on('swipeleft', function(e) {
+        e.preventDefault();
+        e.gesture.preventDefault();
+        goLeft();
+    });
+    hammer.on('swipedown', function(e) {
+        e.preventDefault();
+        e.gesture.preventDefault();
+        goDown();
+    });
+    hammer.on('touch', function(e) {
+        camera.debugDraw(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY);
+    });
+
+    /*
+    ['drag, dragstart, dragend, dragup, dragdown, dragleft, dragright'].forEach(function(etype) {
+        hammer.on(etype, function(e) {
+            e.preventDefault();
+            e.gesture.preventDefault();
+        });
+    });
+    */
     function goLeft() {
         if (map.moveLeftAllowed()) {
             map.moveLeft();

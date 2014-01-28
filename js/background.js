@@ -11,12 +11,9 @@
     //console.log('Width will be ', width * (window.innerWidth / 11)  / 100);
     var scale = background.scale = (window.innerWidth / 11) / 100;
 
-    $('#canvas').append('<canvas id="background" width="' + (width * 100 * scale) +
-      '" height="' + (height * 100 * scale) + '"></canvas>');
-
-    var canvas = document.getElementById('background');
-
-
+    var canvas = document.createElement('canvas');
+    canvas.width = (width * 100 * scale);
+    canvas.height = (height * 100 * scale);
 
     if (canvas.getContext) {
       var ctx = canvas.getContext('2d');
@@ -69,6 +66,8 @@
         ctx.stroke();
 
       }
+
+      camera.setBackground(canvas);
     }
   };
 })();
