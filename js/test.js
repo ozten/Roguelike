@@ -72,7 +72,8 @@ function refreshMap() {
     ['S', 'S', 'S', 'S', 'S', 'S', 'S'] // 12
   ];
 }
-test("Map decoration", function() {
+asyncTest("Map decoration", function() {
+  expect(7);
   var util = window.mapDecoratorUtil;
   var map = refreshMap();
   var deadEndCorridor2bedRoom = [
@@ -100,6 +101,9 @@ test("Map decoration", function() {
 
   var map = refreshMap();
   // Rotate pattern 90 should match upper left corner 0,8
-  equal(util.is90CCWPattern(map, deadEndCorridor2bedRoom[0], 0, 8), true, 'Matches work');
+  util.is90CCWPattern(map, deadEndCorridor2bedRoom[0], 0, 8, function(matched) {
+    start();
+    ok(matched, 'Matches work at 90 CCW');
+  });
 
 });
