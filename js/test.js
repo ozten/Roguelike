@@ -66,14 +66,14 @@ function refreshMap() {
     ['S', 'S', 'S', 'S', 'S', 'S', 'S'], // 6
     ['S', 'S', 'S', 'S', 'S', 'S', 'S'], // 7
     ['S', 'S', 'S', 'S', 'S', 'S', 'S'], // 8
-    ['S', 'S', ' ', 'S', 'S', 'S', 'S'], // 8
+    ['S', 'S', ' ', 'S', 'S', 'S', 'S'], // 9
     ['S', ' ', ' ', ' ', ' ', 'S', 'S'], // 10
     ['S', 'S', 'S', 'S', 'S', 'S', 'S'], // 11
     ['S', 'S', 'S', 'S', 'S', 'S', 'S'] // 12
   ];
 }
 asyncTest("Map decoration", function() {
-  expect(7);
+  expect(12);
   var util = window.mapDecoratorUtil;
   var map = refreshMap();
   var deadEndCorridor2bedRoom = [
@@ -104,6 +104,22 @@ asyncTest("Map decoration", function() {
   util.is90CCWPattern(map, deadEndCorridor2bedRoom[0], 0, 8, function(matched) {
     start();
     ok(matched, 'Matches work at 90 CCW');
+  });
+  stop();
+  util.apply90CCWPattern(map, deadEndCorridor2bedRoom[1], 0, 8, function(matched) {
+    start();
+    var rot90CCWPat = [
+      ['*', '!', 'S', 'S'],
+      ['*', '!', ' ', ' '],
+      ['*', '!', ' ', ' '],
+      ['*', '!', ' ', 's'],
+      ['*', '!', 'S', 'S']
+    ];
+    deepEqual(map[8].slice(0, 4), rot90CCWPat[0], 'We updated the map with the new pattern');
+    deepEqual(map[9].slice(0, 4), rot90CCWPat[1]);
+    deepEqual(map[10].slice(0, 4), rot90CCWPat[2]);
+    deepEqual(map[11].slice(0, 4), rot90CCWPat[3]);
+    deepEqual(map[12].slice(0, 4), rot90CCWPat[4]);
   });
 
 });

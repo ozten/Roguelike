@@ -68,6 +68,7 @@
    * finCb called if there were never any errors iterating over cells
    */
   function iter90CCW(map, pattern, x, y, cb, finCb) {
+    console.log('pattern=', pattern);
     // swap x and y
     // iterate y backwards
     // so
@@ -81,6 +82,7 @@
           // We're done, never call finCb
           return cb('out of range');
         } else {             // Map x,  Map y Pattern x, y
+          console.log('iter90CWW', xx + x, mapY + y, 'pattern', xx, yy);
           if (false === cb(null, xx + x, mapY + y, xx, yy)) {
             // Iterator bailing
             return;
@@ -89,6 +91,7 @@
       }
       mapY++;
     }
+    console.log('000000000000000--------');
     return finCb();
   }
 
@@ -120,13 +123,15 @@
   window.mapDecoratorUtil.applyPattern = applyPattern;
 
   function apply90CCWPattern(map, pattern, x, y, cb) {
-    for (var yy = 0; yy < pattern.length; yy++) {
-      for (var xx = 0; xx < pattern[yy].length; xx++) {
-        map[yy + y][xx + x] = pattern[yy][xx];
-      }
-    }
+    iter90CCW(map, pattern, x, y, function(err, mapX, mapY, patternX, patternY) {
+      map[mapY][mapX] = pattern[patternX][patternY];
+      // Continue iterating
+      return true;
+    }, function() {
+      cb(true);
+    });
   }
-  window.mapDecoratorUtil.applyPattern = applyPattern;
+  window.mapDecoratorUtil.apply90CCWPattern = apply90CCWPattern;
 
   function debugPrintMap(map) {
     var js = [];
