@@ -46,7 +46,6 @@
 
   function walkable(map, destPos, x, y) {
     if (x === destPos[0] && y === destPos[1]) {
-      console.log('WHy that is our destiantion..');
       return true;
     }
 
@@ -55,7 +54,6 @@
       y < map.length &&
       (map[y][x] === ' ' ||
         map[y][x] === '@')) {
-      console.log('Sure ', x, y, '[' + map[y][x] + ']');
       return true;
     }
     return false;
@@ -65,28 +63,21 @@
     var nodes = [];
     var p = cur.pos;
 
-
-    console.log('who are the neighbors?', p[0], p[1]);
-
     // North
     if (walkable(map, destPos, p[0], p[1] - 1)) {
-      console.log('Adding', p[0], p[1] - 1);
       nodes.push(new Space([p[0], p[1] - 1]));
 
     }
     // East
     if (walkable(map, destPos, p[0] + 1, p[1])) {
-      console.log('Adding', p[0] + 1, p[1]);
       nodes.push(new Space([p[0] + 1, p[1]]));
     }
     // South
     if (walkable(map, destPos, p[0], p[1] + 1)) {
-      console.log('Adding', p[0], p[1] + 1);
       nodes.push(new Space([p[0], p[1] + 1]));
     }
     // West
     if (walkable(map, destPos, p[0] - 1, p[1])) {
-      console.log('Adding', p[0] - 1, p[1]);
       nodes.push(new Space([p[0] - 1, p[1]]));
     }
 
@@ -94,7 +85,6 @@
   }
 
   window.astar = function(map, curPos, destPos) {
-    console.log('A* FROM', curPos, 'TO', destPos);
     var start = new Space(curPos);
     var goal = new Space(destPos);
     var closedSet = {};

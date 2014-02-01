@@ -158,7 +158,7 @@ _map[2][1] = 'H';
     console.log('[', js.join(','), ']');
     console.log(_map);
     window._map = _map;
-    //var dMap = mapDecorator(_map);
+    var dMap = mapDecorator(_map);
 
     _map[startY][startX] = '@';
     curX = startX;
