@@ -34,7 +34,6 @@
         if (isPattern(dMap, deadEndCorridor2bedRoom[0], x1, y1)) {
           applyPattern(dMap, deadEndCorridor2bedRoom[1], x1, y1);
         }
-
       }
     }
 
@@ -57,18 +56,17 @@
         }
       }
     }
-    console.log('BOO Ya');
     return true;
   };
   window.mapDecoratorUtil = {};
   window.mapDecoratorUtil.isPattern = isPattern;
 
   /**
+   * Iterates a pattern at 90 counter clockwize
    * cb called on each cell function(err, mapX, mapY, patternX, patternY)
    * finCb called if there were never any errors iterating over cells
    */
   function iter90CCW(map, pattern, x, y, cb, finCb) {
-    console.log('pattern=', pattern);
     // swap x and y
     // iterate y backwards
     // so
@@ -82,7 +80,6 @@
           // We're done, never call finCb
           return cb('out of range');
         } else {             // Map x,  Map y Pattern x, y
-          console.log('iter90CWW', xx + x, mapY + y, 'pattern', xx, yy);
           if (false === cb(null, xx + x, mapY + y, xx, yy)) {
             // Iterator bailing
             return;
@@ -91,7 +88,6 @@
       }
       mapY++;
     }
-    console.log('000000000000000--------');
     return finCb();
   }
 
