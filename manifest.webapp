@@ -1,5 +1,6 @@
 {
     "name": "Dev Roguelike",
+    "description": "A Game",
     "orientation": ["landscape"],
     "icons": {
         "256": "/img/icon/Roguelike256.png",

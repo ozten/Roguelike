@@ -99,7 +99,7 @@ if (!window.console) {
         goDown();
     });
     hammer.on('touch', function(e) {
-        camera.debugDraw(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY);
+        goToScreenPoint(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY);
     });
 
     /*
@@ -152,6 +152,49 @@ if (!window.console) {
         if (map.moveDownAllowed()) {
             map.moveDown();
             camera.stepDown();
+        }
+    }
+
+    function goByCoordinates(from, to) {
+        console.log('Going ', from, ' -> ', to);
+        if (from[0] > to[0]) {
+            console.log('going left');
+            goLeft();
+        } else if (from[1] > to[1]) {
+            console.log('going up');
+            goUp();
+        } else if (from[0] < to[0]) {
+            console.log('going right');
+            goRight();
+        } else if (from[1] < to[1]) {
+            console.log('going down');
+            goDown();
+        }
+    }
+
+    var queuedMoves = [];
+    setInterval(function() {
+        var move = queuedMoves.shift();
+        if ( !! move) {
+            goByCoordinates(map.currentCoordinates(), move);
+            console.log('QUEUED MOVES LEN', queuedMoves.length);
+        }
+    }, 300);
+
+    function goToScreenPoint(x, y) {
+        camera.debugDraw(x, y);
+        console.log('screen', x, y);
+        var coords = map.screenPointToMapCoord(x, y);
+        console.log(map.currentCoordinates());
+        console.log(coords);
+        if (coords.length === 2) {
+            var moves = astar(map.map, map.currentCoordinates(), coords);
+            queuedMoves = [];
+
+            while (moves.length > 0) {
+                queuedMoves.push(moves.shift());
+                console.log('MOVES LEN', moves.length);
+            }
         }
     }
 
