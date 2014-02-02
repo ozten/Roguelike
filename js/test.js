@@ -136,14 +136,14 @@ test("Map decorator 90", function() {
   var makeWalledRoom = [
     [
       ['S', 'S', 'S', 'S', 'S'],
-      [' ', ' ', ' ', 'S', 'S'],
-      ['S', ' ', 'S', 'S', 'S'],
+      ['S', 'S', 'S', ' ', 'S'],
+      ['S', 'S', ' ', ' ', ' '],
       ['S', 'S', 'S', 'S', 'S']
     ],
     [
       ['S', 'S', 'S', 'S', 'S'],
-      ['S', '!', '!', '!', 'S'],
-      ['S', '!', '!', '!', 'S'],
+      ['S', 'S', 'S', '@', 'S'],
+      ['S', '!', '!', '!', '!'],
       ['S', 'S', 'S', 'S', 'S']
     ]
   ];
@@ -152,18 +152,16 @@ test("Map decorator 90", function() {
   util.apply90Pattern(map, makeWalledRoom[1], 1, 0);
   var rot90Pat = [
     ['S', 'S', 'S', 'S'],
-    ['S', '!', '!', 'S'],
-    ['S', '!', '!', 'S'],
-    ['S', '!', '!', 'S'],
-    ['S', 'S', 'S', 'S']
+    ['S', '!', 'S', 'S'],
+    ['S', '!', 'S', 'S'],
+    ['S', '!', '@', 'S'],
+    ['S', '!', 'S', 'S']
   ];
   deepEqual(map[0].slice(1, 5), rot90Pat[0], 'We updated the map with the new pattern');
   deepEqual(map[1].slice(1, 5), rot90Pat[1]);
   deepEqual(map[2].slice(1, 5), rot90Pat[2]);
   deepEqual(map[3].slice(1, 5), rot90Pat[3]);
   deepEqual(map[4].slice(1, 5), rot90Pat[4]);
-
-  // TODO ... I did this wrong!
 
 });
 

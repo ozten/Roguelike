@@ -96,26 +96,21 @@
   function iter90(map, pattern, x, y, cb) {
     // swap x and y
     // iterate x backwards
-    // so
-    // 1, 0 should actually be 0, 3
-    // 3, 2 should actually be 2, 1
-
-    var mapY = 0;
-    // 4, 0 -> 0, 4
-    for (var yy = pattern[0].length - 1; yy >= 0; yy--) {
-      for (var xx = 0; xx < pattern.length; xx++) {
-        if (mapY + y >= map.length ||
-          xx + x > map[0].length) {
+    for (var yy =  0; yy < pattern[0].length; yy++) {
+      var mapX = 0;
+      for (var xx = pattern.length - 1; xx > 0; xx--) {
+        if (yy + y >= map.length ||
+          mapX + x > map[0].length) {
           // Bail
           return false;
         } else { // Map x,  Map y Pattern x, y
-          if (false === cb(xx + x, mapY + y, yy, xx)) {
+          if (false === cb(mapX + x, yy + y, yy, xx)) {
             // Iterator bailing
             return false;
           }
         }
+        mapX++;
       }
-      mapY++;
     }
     return true;
   }
