@@ -121,9 +121,8 @@ test("Map decoration regular and 90CCW", function() {
 });
 
 test("Map decorator 90", function() {
-  console.log('AOK=============');
-    var util = window.mapDecoratorUtil;
-    var map = refreshMap();
+  var util = window.mapDecoratorUtil;
+  var map = refreshMap();
 
   /* Snapshot of map at 1,0
        1    2    3    4
@@ -134,23 +133,23 @@ test("Map decorator 90", function() {
     [ 'S', ' ', 'S', 'S', 4
     */
 
-    var makeWalledRoom = [
-      [
-        ['S', 'S', 'S', 'S', 'S'],
-        [' ', ' ', ' ', 'S', 'S'],
-        ['S', ' ', 'S', 'S', 'S'],
-        ['S', 'S', 'S', 'S', 'S']
-      ],
-      [
-        ['S', 'S', 'S', 'S', 'S'],
-        ['S', '!', '!', '!', 'S'],
-        ['S', '!', '!', '!', 'S'],
-        ['S', 'S', 'S', 'S', 'S']
-      ]
-    ];
-    // Rotate pattern 90 should match upper left corner 0,8
-    ok(util.is90Pattern(map, makeWalledRoom[0], 1, 0), 'Matches work at 90 clockwize');
-    util.apply90Pattern(map, makeWalledRoom[1], 1, 0);
+  var makeWalledRoom = [
+    [
+      ['S', 'S', 'S', 'S', 'S'],
+      [' ', ' ', ' ', 'S', 'S'],
+      ['S', ' ', 'S', 'S', 'S'],
+      ['S', 'S', 'S', 'S', 'S']
+    ],
+    [
+      ['S', 'S', 'S', 'S', 'S'],
+      ['S', '!', '!', '!', 'S'],
+      ['S', '!', '!', '!', 'S'],
+      ['S', 'S', 'S', 'S', 'S']
+    ]
+  ];
+  // Rotate pattern 90 should match upper left corner 0,8
+  ok(util.is90Pattern(map, makeWalledRoom[0], 1, 0), 'Matches work at 90 clockwize');
+  util.apply90Pattern(map, makeWalledRoom[1], 1, 0);
   var rot90Pat = [
     ['S', 'S', 'S', 'S'],
     ['S', '!', '!', 'S'],
@@ -164,4 +163,55 @@ test("Map decorator 90", function() {
   deepEqual(map[3].slice(1, 5), rot90Pat[3]);
   deepEqual(map[4].slice(1, 5), rot90Pat[4]);
 
-  });
+  // TODO ... I did this wrong!
+
+});
+
+test("Map decorator 180", function() {
+
+  var util = window.mapDecoratorUtil;
+  var map = refreshMap();
+
+  /* Snapshot of map at 1,0
+       1    2    3    4
+    [ 'S', 'S', 'S', 'S', 0
+    [ 'S', 'S', 'S', 'S', 1
+    [ 'S', ' ', 'S', 'S', 2
+    [ 'S', ' ', ' ', 'S', 3
+    [ 'S', 'x', 'S', 'S', 4
+    */
+
+  var makeWalledRoom = [
+    [ // 0   1     2    3
+      ['S', 'S', ' ', 'S'], // 0
+      ['S', ' ', ' ', 'S'], // 1
+      ['S', 'S', ' ', 'S'], // 2
+      ['S', 'S', 'S', 'S'], // 3
+      ['S', 'S', 'S', 'S'] // 4
+    ],
+    [
+      ['S', 'S', 'S', 'S'],
+      ['S', '!', '!', 'S'],
+      ['S', '!', '!', 'S'],
+      ['S', ' ', ' ', 'S'],
+      ['S', ' ', 'S', 'S']
+    ]
+  ];
+  // Rotate pattern 90 should match upper left corner 0,8
+  ok(util.is180Pattern(map, makeWalledRoom[0], 1, 0), 'Matches work at 180 rotation');
+
+  util.apply180Pattern(map, makeWalledRoom[1], 1, 0);
+  var rot180Pat = [
+    ['S', 'S', ' ', 'S'],
+    ['S', ' ', ' ', 'S'],
+    ['S', '!', '!', 'S'],
+    ['S', '!', '!', 'S'],
+    ['S', 'S', 'S', 'S']
+  ];
+  deepEqual(map[0].slice(1, 5), rot180Pat[0], 'We updated the map with the new pattern');
+  deepEqual(map[1].slice(1, 5), rot180Pat[1]);
+  deepEqual(map[2].slice(1, 5), rot180Pat[2]);
+  deepEqual(map[3].slice(1, 5), rot180Pat[3]);
+  deepEqual(map[4].slice(1, 5), rot180Pat[4]);
+
+});

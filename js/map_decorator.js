@@ -77,7 +77,7 @@
           // We're done, never call finCb
           return false;
         } else { // Map x,  Map y Pattern x, y
-          if (false === cb(xx + x, mapY + y, xx, yy)) {
+          if (false === cb(xx + x, mapY + y, yy, xx)) {
             // Iterator bailing
             return false;
           }
@@ -99,18 +99,8 @@
     // so
     // 1, 0 should actually be 0, 3
     // 3, 2 should actually be 2, 1
-    /*
-
-[
-        ['1', '2', '3', '4', '7'],
-        ['S', 'S', 'S', ' ', 'S'],
-        ['S', ' ', ' ', ' ', ' '],
-        ['9', 'S', 'S', 'S', '8']
-      ],
-*/
 
     var mapY = 0;
-
     // 4, 0 -> 0, 4
     for (var yy = pattern[0].length - 1; yy >= 0; yy--) {
       for (var xx = 0; xx < pattern.length; xx++) {
@@ -119,7 +109,7 @@
           // Bail
           return false;
         } else { // Map x,  Map y Pattern x, y
-          if (false === cb(xx + x, mapY + y, xx, yy)) {
+          if (false === cb(xx + x, mapY + y, yy, xx)) {
             // Iterator bailing
             return false;
           }
@@ -130,12 +120,42 @@
     return true;
   }
 
+  /**
+   * Iterates a pattern at 180 rotated
+   * cb called on each cell function(err, mapX, mapY, patternX, patternY)
+   * function returns true if there were never any errors iterating over cells
+   */
+  function iter180(map, pattern, x, y, cb) {
+    // iterate x and y backwards
+    var mapY = 0;
+    for (var yy = pattern.length - 1; yy >= 0; yy--) {
+      var mapX = 0;
+      for (var xx = pattern[0].length - 1; xx >= 0; xx--) {
+        if (mapY + y >= map.length ||
+          mapX + x > map[0].length) {
+          // Bail
+          return false;
+        } else {
+
+          if (false === cb(mapX + x, mapY + y, xx, yy)) {
+            // Iterator bailing
+            return false;
+          }
+        }
+        mapX++;
+      }
+      mapY++;
+    }
+    return true;
+  }
+
   function isPatternFn(map, pattern) {
     return function(mapX, mapY, patternX, patternY) {
-      if (map[mapY][mapX] !== pattern[patternX][patternY]) {
+      if (map[mapY][mapX] !== pattern[patternY][patternX]) {
         // Bail
         return false;
       }
+
       // Continue iterating
       return true;
     };
@@ -157,6 +177,14 @@
   }
   window.mapDecoratorUtil.is90Pattern = is90Pattern;
 
+  /**
+   * 180 x, y of map are normal top left
+   */
+  function is180Pattern(map, pattern, x, y) {
+    return iter180(map, pattern, x, y, isPatternFn(map, pattern));
+  }
+  window.mapDecoratorUtil.is180Pattern = is180Pattern;
+
   function applyPattern(map, pattern, x, y) {
     for (var yy = 0; yy < pattern.length; yy++) {
       for (var xx = 0; xx < pattern[yy].length; xx++) {
@@ -168,7 +196,7 @@
 
   function applyPatternFn(map, pattern) {
     return function(mapX, mapY, patternX, patternY) {
-      map[mapY][mapX] = pattern[patternX][patternY];
+      map[mapY][mapX] = pattern[patternY][patternX];
       // Continue iterating
       return true;
     };
@@ -183,6 +211,11 @@
     return iter90(map, pattern, x, y, applyPatternFn(map, pattern));
   }
   window.mapDecoratorUtil.apply90Pattern = apply90Pattern;
+
+  function apply180Pattern(map, pattern, x, y) {
+    return iter180(map, pattern, x, y, applyPatternFn(map, pattern));
+  }
+  window.mapDecoratorUtil.apply180Pattern = apply180Pattern;
 
   function debugPrintMap(map) {
     var js = [];
