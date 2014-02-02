@@ -130,18 +130,22 @@
     return true;
   }
 
-  /**
-   * 90CCW x, y of map are normal top left
-   */
-  function is90CCWPattern(map, pattern, x, y) {
-    return iter90CCW(map, pattern, x, y, function(mapX, mapY, patternX, patternY) {
+  function isPatternFn(map, pattern) {
+    return function(mapX, mapY, patternX, patternY) {
       if (map[mapY][mapX] !== pattern[patternX][patternY]) {
         // Bail
         return false;
       }
       // Continue iterating
       return true;
-    });
+    };
+  }
+
+  /**
+   * 90CCW x, y of map are normal top left
+   */
+  function is90CCWPattern(map, pattern, x, y) {
+    return iter90CCW(map, pattern, x, y, isPatternFn(map, pattern));
   }
   window.mapDecoratorUtil.is90CCWPattern = is90CCWPattern;
 
@@ -149,15 +153,7 @@
    * 90 clockwize x, y of map are normal top left
    */
   function is90Pattern(map, pattern, x, y) {
-    return iter90(map, pattern, x, y, function(mapX, mapY, patternX, patternY) {
-      // Swap x and y for pattern
-      if (map[mapY][mapX] !== pattern[patternX][patternY]) {
-        // Bail
-        return false;
-      }
-      // Continue iterating
-      return true;
-    });
+    return iter90(map, pattern, x, y, isPatternFn(map, pattern));
   }
   window.mapDecoratorUtil.is90Pattern = is90Pattern;
 
@@ -170,21 +166,21 @@
   }
   window.mapDecoratorUtil.applyPattern = applyPattern;
 
-  function apply90CCWPattern(map, pattern, x, y) {
-    return iter90CCW(map, pattern, x, y, function(mapX, mapY, patternX, patternY) {
+  function applyPatternFn(map, pattern) {
+    return function(mapX, mapY, patternX, patternY) {
       map[mapY][mapX] = pattern[patternX][patternY];
       // Continue iterating
       return true;
-    });
+    };
+  }
+
+  function apply90CCWPattern(map, pattern, x, y) {
+    return iter90CCW(map, pattern, x, y, applyPatternFn(map, pattern));
   }
   window.mapDecoratorUtil.apply90CCWPattern = apply90CCWPattern;
 
   function apply90Pattern(map, pattern, x, y) {
-    return iter90(map, pattern, x, y, function(mapX, mapY, patternX, patternY) {
-      map[mapY][mapX] = pattern[patternX][patternY];
-      // Continue iterating
-      return true;
-    });
+    return iter90(map, pattern, x, y, applyPatternFn(map, pattern));
   }
   window.mapDecoratorUtil.apply90Pattern = apply90Pattern;
 
