@@ -27,8 +27,6 @@
         dMap[y].push(map[y][x]);
       }
     }
-
-
     for (var y1 = 0; y1 < map.length; y1++) {
       for (var x1 = 0; x1 < map[0].length; x1++) {
         if (isPattern(dMap, deadEndCorridor2bedRoom[0], x1, y1)) {
@@ -36,7 +34,6 @@
         }
       }
     }
-
     debugPrintMap(dMap);
     return dMap;
   };
@@ -57,16 +54,16 @@
       }
     }
     return true;
-  };
+  }
   window.mapDecoratorUtil = {};
   window.mapDecoratorUtil.isPattern = isPattern;
 
   /**
    * Iterates a pattern at 90 counter clockwize
    * cb called on each cell function(err, mapX, mapY, patternX, patternY)
-   * finCb called if there were never any errors iterating over cells
+   * function returns true if there were never any errors iterating over cells
    */
-  function iter90CCW(map, pattern, x, y, cb, finCb) {
+  function iter90CCW(map, pattern, x, y, cb) {
     // swap x and y
     // iterate y backwards
     // so
@@ -78,36 +75,91 @@
         if (mapY + y >= map.length ||
           xx + x > map[0].length) {
           // We're done, never call finCb
-          return cb('out of range');
-        } else {             // Map x,  Map y Pattern x, y
-          if (false === cb(null, xx + x, mapY + y, xx, yy)) {
+          return false;
+        } else { // Map x,  Map y Pattern x, y
+          if (false === cb(xx + x, mapY + y, xx, yy)) {
             // Iterator bailing
-            return;
+            return false;
           }
         }
       }
       mapY++;
     }
-    return finCb();
+    return true;
+  }
+
+  /**
+   * Iterates a pattern at 90 clockwize
+   * cb called on each cell function(err, mapX, mapY, patternX, patternY)
+   * function returns true if there were never any errors iterating over cells
+   */
+  function iter90(map, pattern, x, y, cb) {
+    // swap x and y
+    // iterate x backwards
+    // so
+    // 1, 0 should actually be 0, 3
+    // 3, 2 should actually be 2, 1
+    /*
+
+[
+        ['1', '2', '3', '4', '7'],
+        ['S', 'S', 'S', ' ', 'S'],
+        ['S', ' ', ' ', ' ', ' '],
+        ['9', 'S', 'S', 'S', '8']
+      ],
+*/
+
+    var mapY = 0;
+
+    // 4, 0 -> 0, 4
+    for (var yy = pattern[0].length - 1; yy >= 0; yy--) {
+      for (var xx = 0; xx < pattern.length; xx++) {
+        if (mapY + y >= map.length ||
+          xx + x > map[0].length) {
+          // Bail
+          return false;
+        } else { // Map x,  Map y Pattern x, y
+          if (false === cb(xx + x, mapY + y, xx, yy)) {
+            // Iterator bailing
+            return false;
+          }
+        }
+      }
+      mapY++;
+    }
+    return true;
   }
 
   /**
    * 90CCW x, y of map are normal top left
    */
-  function is90CCWPattern(map, pattern, x, y, cb) {
-    iter90CCW(map, pattern, x, y, function(err, mapX, mapY, patternX, patternY) {
+  function is90CCWPattern(map, pattern, x, y) {
+    return iter90CCW(map, pattern, x, y, function(mapX, mapY, patternX, patternY) {
       if (map[mapY][mapX] !== pattern[patternX][patternY]) {
-        cb(false);
         // Bail
         return false;
       }
       // Continue iterating
       return true;
-    }, function() {
-      cb(true);
     });
   }
   window.mapDecoratorUtil.is90CCWPattern = is90CCWPattern;
+
+  /**
+   * 90 clockwize x, y of map are normal top left
+   */
+  function is90Pattern(map, pattern, x, y) {
+    return iter90(map, pattern, x, y, function(mapX, mapY, patternX, patternY) {
+      // Swap x and y for pattern
+      if (map[mapY][mapX] !== pattern[patternX][patternY]) {
+        // Bail
+        return false;
+      }
+      // Continue iterating
+      return true;
+    });
+  }
+  window.mapDecoratorUtil.is90Pattern = is90Pattern;
 
   function applyPattern(map, pattern, x, y) {
     for (var yy = 0; yy < pattern.length; yy++) {
@@ -118,16 +170,23 @@
   }
   window.mapDecoratorUtil.applyPattern = applyPattern;
 
-  function apply90CCWPattern(map, pattern, x, y, cb) {
-    iter90CCW(map, pattern, x, y, function(err, mapX, mapY, patternX, patternY) {
+  function apply90CCWPattern(map, pattern, x, y) {
+    return iter90CCW(map, pattern, x, y, function(mapX, mapY, patternX, patternY) {
       map[mapY][mapX] = pattern[patternX][patternY];
       // Continue iterating
       return true;
-    }, function() {
-      cb(true);
     });
   }
   window.mapDecoratorUtil.apply90CCWPattern = apply90CCWPattern;
+
+  function apply90Pattern(map, pattern, x, y) {
+    return iter90(map, pattern, x, y, function(mapX, mapY, patternX, patternY) {
+      map[mapY][mapX] = pattern[patternX][patternY];
+      // Continue iterating
+      return true;
+    });
+  }
+  window.mapDecoratorUtil.apply90Pattern = apply90Pattern;
 
   function debugPrintMap(map) {
     var js = [];
