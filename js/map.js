@@ -22,6 +22,8 @@
 
   var SPACE = 'S';
   var PATH = ' ';
+  var AIRLOCK = 'a';
+  var SLEEPING_QUARTERS = 'q';
 
   map.startPos = function() {
     return [startX, startY];
@@ -63,7 +65,7 @@
 
     for (var row = 0; row < height; row++) {
       _map[row] = [];
-      console.log(row);
+
       for (var col = 0; col < width; col++) {
 
         _map[row][col] = SPACE;
@@ -154,12 +156,15 @@ _map[2][1] = 'H';
       js.push('[' + _map[row2].join("','") + '],\n');
 
     }
-    console.log(b);
+    window._map = _map;
+
+    _map = mapDecorator(_map);
+
+    //console.log(b);
     console.log('[', js.join(','), ']');
     console.log(_map);
-    window._map = _map;
-    var dMap = mapDecorator(_map);
 
+    console.log('Starting at ', startX, startY);
     _map[startY][startX] = '@';
     curX = startX;
     curY = startY;
@@ -168,12 +173,11 @@ _map[2][1] = 'H';
   };
 
   function walkableTile(x, y) {
-    return [' ', '@'].indexOf(_map[y][x]) !== -1;
+    return [PATH, AIRLOCK, SLEEPING_QUARTERS, '@'].indexOf(_map[y][x]) !== -1;
   }
 
   map.moveUpAllowed = function() {
     try {
-      console.log('Move up allowed? from', curX, curY, ' to ', _map[curY - 1][curX]);
       return walkableTile(curX, curY - 1);
     } catch (e) {
       return false;
@@ -182,7 +186,6 @@ _map[2][1] = 'H';
 
   map.moveRightAllowed = function() {
     try {
-      console.log('Move right allowed? from', curX, curY, ' to ', _map[curY][curX + 1]);
       return walkableTile(curX + 1, curY);
     } catch (e) {
       return false;
@@ -191,7 +194,6 @@ _map[2][1] = 'H';
 
   map.moveDownAllowed = function() {
     try {
-      console.log('Move down allowed? from', curX, curY, ' to ', _map[curY + 1][curX]);
       return walkableTile(curX, curY + 1);
     } catch (e) {
       return false;
@@ -200,7 +202,6 @@ _map[2][1] = 'H';
 
   map.moveLeftAllowed = function() {
     try {
-      console.log('Move left allowed? from', curX, curY, ' to ', _map[curY][curX - 1]);
       return walkableTile(curX - 1, curY);
     } catch (e) {
       return false;
@@ -235,14 +236,11 @@ _map[2][1] = 'H';
     //curX and curY are map coordinates, not pixels
     var cameraOffsetX = 200 * scale;
     var cameraOffsetY = 200 * scale;
-    console.log('curX=', curX, 'curY=', curY, 'x=', x, 'y=', y);
-    console.log('Xs=', curX + x, 'Ys=', curY + y);
-
 
     var tileWidth = scale * 100;
 
     var coords = [curX + Math.floor((x - cameraOffsetX) / tileWidth), curY + Math.floor((y - cameraOffsetY) / tileWidth)];
-    console.log('raw', coords);
+
     // Is this possible? check for fat fingering a close by space
     if (!walkableTile(coords[0], coords[1])) {
       // TODO measure distance and pick the closest...

@@ -36,6 +36,12 @@
             case '@':
               ctx.fillStyle = "rgb(255,200,200)";
               break;
+            case 'q':
+              ctx.fillStyle = "rgb(75,75,75)";
+              break;
+            case 'a':
+              ctx.fillStyle = "rgb(255,255,100)";
+              break;
             default:
               console.log('UNKNOWN TIle Type');
               break;

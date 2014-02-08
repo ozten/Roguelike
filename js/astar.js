@@ -53,6 +53,8 @@
       x < map[0].length &&
       y < map.length &&
       (map[y][x] === ' ' ||
+       map[y][x] === 'a' || // Airlock room
+       map[y][x] === 'q' || // Sleeping Quarters
         map[y][x] === '@')) {
       return true;
     }

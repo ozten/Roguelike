@@ -1,6 +1,7 @@
 (function() {
 
-  var deadEndCorridor2bedRoom = [
+  var corridor2bedRoom = [
+    // Sleeping quarters
     [
       ['S', 'S', ' ', 'S', 'S'],
       ['S', 'S', ' ', 'S', 'S'],
@@ -10,12 +11,31 @@
       ['S', 'S', ' ', 'S', 'S']
     ],
     [
-      ['*', '*', '*', '*', '*'],
-      ['!', '!', '!', '!', '!'],
-      ['S', ' ', ' ', ' ', 'S'],
-      ['S', 's', ' ', ' ', 'S'],
-      ['S', 's', ' ', ' ', 'S'],
-      ['S', 's', ' ', ' ', 'S']
+      ['S', 'S', 'q', 'S', 'S'],
+      ['S', 'b', 'q', 'q', 'S'],
+      ['S', 'b', 'q', 'q', 'S'],
+      ['S', 'q', 'q', 'b', 'S'],
+      ['S', 'q', 'q', 'b', 'S'],
+      ['S', 'S', 'q', 'S', 'S']
+    ]
+  ];
+  var deadEndCorridor2Airlock = [
+
+    [
+      ['S', 'S', ' ', 'S', 'S'],
+      ['S', 'S', ' ', 'S', 'S'],
+      ['S', 'S', ' ', 'S', 'S'],
+      ['S', 'S', ' ', 'S', 'S'],
+      ['S', 'S', 'S', 'S', 'S'],
+      ['S', 'S', 'S', 'S', 'S']
+    ],
+    [
+      ['S', 'S', 'a', 'S'],
+      ['S', 'a', 'a', 'S'],
+      ['S', 'a', 'a', 'S'],
+      ['S', 'a', 'S', 'S'],
+      ['S', 'S', 'S', 'S'],
+      ['S', 'S', 'S', 'S']
     ]
   ];
 
@@ -29,14 +49,29 @@
     }
     for (var y1 = 0; y1 < map.length; y1++) {
       for (var x1 = 0; x1 < map[0].length; x1++) {
-        if (isPattern(dMap, deadEndCorridor2bedRoom[0], x1, y1)) {
-          applyPattern(dMap, deadEndCorridor2bedRoom[1], x1, y1);
-        }
+        tryPattern(dMap, x1, y1, deadEndCorridor2Airlock);
+        tryPattern(dMap, x1, y1, corridor2bedRoom);
+
       }
     }
     debugPrintMap(dMap);
     return dMap;
   };
+
+  function tryPattern(dMap, x1, y1, pattern) {
+    if (isPattern(dMap, pattern[0], x1, y1)) {
+      applyPattern(dMap, pattern[1], x1, y1);
+    }
+    if (is90CCWPattern(dMap, pattern[0], x1, y1)) {
+      apply90CCWPattern(dMap, pattern[1], x1, y1);
+    }
+    if (is90Pattern(dMap, pattern[0], x1, y1)) {
+      apply90Pattern(dMap, pattern[1], x1, y1);
+    }
+    if (is180Pattern(dMap, pattern[0], x1, y1)) {
+      apply180Pattern(dMap, pattern[1], x1, y1);
+    }
+  }
 
   /**
    * Compare a pattern (NxN multi-dimensional array) against
@@ -96,7 +131,7 @@
   function iter90(map, pattern, x, y, cb) {
     // swap x and y
     // iterate x backwards
-    for (var yy =  0; yy < pattern[0].length; yy++) {
+    for (var yy = 0; yy < pattern[0].length; yy++) {
       var mapX = 0;
       for (var xx = pattern.length - 1; xx > 0; xx--) {
         if (yy + y >= map.length ||
@@ -184,6 +219,7 @@
     for (var yy = 0; yy < pattern.length; yy++) {
       for (var xx = 0; xx < pattern[yy].length; xx++) {
         map[yy + y][xx + x] = pattern[yy][xx];
+        //console.log(xx + x, yy + y, ' now ', map[yy+y][xx+x]);
       }
     }
   }
@@ -192,6 +228,7 @@
   function applyPatternFn(map, pattern) {
     return function(mapX, mapY, patternX, patternY) {
       map[mapY][mapX] = pattern[patternY][patternX];
+      //console.log(mapX, mapY, 'now', map[mapY][mapX]);
       // Continue iterating
       return true;
     };
