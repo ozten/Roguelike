@@ -39,6 +39,9 @@
             case 'q':
               ctx.fillStyle = "rgb(75,75,75)";
               break;
+            case 'b':
+              ctx.fillStyle = "rgb(0,175,175)";
+              break;
             case 'a':
               ctx.fillStyle = "rgb(255,255,100)";
               break;
