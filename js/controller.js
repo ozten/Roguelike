@@ -81,25 +81,33 @@ if (!window.console) {
     hammer.on('swiperight', function(e) {
         e.preventDefault();
         e.gesture.preventDefault();
+        clearTimeout(touchTimeout);
         goRight();
     });
     hammer.on('swipeup', function(e) {
         e.preventDefault();
         e.gesture.preventDefault();
+        clearTimeout(touchTimeout);
         goUp();
     });
     hammer.on('swipeleft', function(e) {
         e.preventDefault();
         e.gesture.preventDefault();
+        clearTimeout(touchTimeout);
         goLeft();
     });
     hammer.on('swipedown', function(e) {
         e.preventDefault();
         e.gesture.preventDefault();
+        clearTimeout(touchTimeout);
         goDown();
     });
+    var touchTimeout;
     hammer.on('touch', function(e) {
+        touchTimeout = setTimeout(function(){
         goToScreenPoint(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY);
+    }, 300);
+
     });
 
     /*
