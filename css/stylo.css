@@ -9,6 +9,7 @@ h1 {
   position: absolute;
   margin-top: 0px;
   padding-top: 0px;
+  z-index: 1;
 }
 #viewport {
   position: absolute;

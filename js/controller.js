@@ -126,24 +126,43 @@ if (!window.console) {
                 spaceman.stop();
             }, 300);
             camera.stepLeft();
+        } else if (map.hasItemOnLeft()) {
+            console.log('Checked for inventory on the left', map.currentCoordinates());
+            var coords = map.currentCoordinates();
+            coords[0] = coords[0] - 1;
+
+            console.log(window.inventory);
+
+            inventory.checkForItem(coords, function(item) {
+                console.log('Checked for items... got', item);
+                if (null !== item) {
+                    ui.showMessage(item);
+                }
+            });
         }
 
     }
 
     function goUp() {
-        console.log('Go up triggered');
+        //console.log('Go up triggered');
         if (map.moveUpAllowed()) {
             map.moveUp();
-            console.log('Allowed');
+
             camera.stepUp();
-        } else {
-            console.log('Denied');
+        } else if (map.hasItemUp()) {
+
+            var coords = map.currentCoordinates();
+            coords[1] = coords[1] - 1;
+            inventory.checkForItem(coords, function(item) {
+                if (null !== item) {
+                    ui.showMessage(item);
+                }
+            });
+
         }
     }
 
     function goRight() {
-
-
         if (map.moveRightAllowed()) {
             map.moveRight();
             spaceman.walkRight();
@@ -151,6 +170,15 @@ if (!window.console) {
                 spaceman.stop();
             }, 300);
             camera.stepRight();
+        } else if (map.hasItemOnRight()) {
+
+            var coords = map.currentCoordinates();
+            coords[0] = coords[0] + 1;
+            inventory.checkForItem(coords, function(item) {
+                if (null !== item) {
+                    ui.showMessage(item);
+                }
+            });
 
         }
     }
@@ -160,11 +188,21 @@ if (!window.console) {
         if (map.moveDownAllowed()) {
             map.moveDown();
             camera.stepDown();
+        } else if (map.hasItemDown()) {
+
+            var coords = map.currentCoordinates();
+            coords[1] = coords[1] + 1;
+            inventory.checkForItem(coords, function(item) {
+                if (null !== item) {
+                    ui.showMessage(item);
+                }
+            });
+
         }
     }
 
     function goByCoordinates(from, to) {
-        console.log('Going ', from, ' -> ', to);
+
         if (from[0] > to[0]) {
             console.log('going left');
             goLeft();
@@ -215,5 +253,6 @@ if (!window.console) {
     $('#character').css({
         top: (200 * scale) + 'px',
         left: (200 * scale) + 'px'
-    })
+    });
+    ui.showMessage('Spaceman');
 })();

@@ -1,4 +1,3 @@
-
 (function() {
   "use strict";
 
@@ -24,6 +23,7 @@
   var PATH = ' ';
   var AIRLOCK = 'a';
   var SLEEPING_QUARTERS = 'q';
+  var BED = 'b';
 
   map.startPos = function() {
     return [startX, startY];
@@ -223,6 +223,42 @@ _map[2][1] = 'H';
 
   map.moveLeft = function() {
     curX -= 1;
+  };
+
+  function isInventoryTile(x, y) {
+    return [BED].indexOf(_map[y][x]) !== -1;
+  }
+
+  map.hasItemOnLeft = function() {
+    try {
+      return isInventoryTile(curX - 1, curY);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  map.hasItemOnRight = function() {
+    try {
+      return isInventoryTile(curX + 1, curY);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  map.hasItemUp = function() {
+    try {
+      return isInventoryTile(curX, curY - 1);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  map.hasItemDown = function() {
+    try {
+      return isInventoryTile(curX, curY + 1);
+    } catch (e) {
+      return false;
+    }
   };
 
   map.currentCoordinates = function() {
