@@ -17,6 +17,7 @@
                 playerItems.parts += 1;
                 cb('Player got 1 part');
             }
+            $('#inventory span').text(playerItems.parts);
         } else {
             cb(null);
         }
