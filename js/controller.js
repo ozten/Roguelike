@@ -47,6 +47,10 @@ if (!window.console) {
             e.keyCode === 115) {
             e.preventDefault();
             goDown();
+        // m key
+        } else if (e.keyCode === 77) {
+            e.preventDefault();
+            camera.toggleMapOverlay();
         } else {
             console.log('Unknown key code', e.keyCode);
             return true;
@@ -104,9 +108,9 @@ if (!window.console) {
     });
     var touchTimeout;
     hammer.on('touch', function(e) {
-        touchTimeout = setTimeout(function(){
-        goToScreenPoint(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY);
-    }, 300);
+        touchTimeout = setTimeout(function() {
+            goToScreenPoint(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY);
+        }, 300);
 
     });
 
@@ -245,14 +249,23 @@ if (!window.console) {
     }
 
     if (window.map) map.generateMap();
-    background.draw();
-    var scale = background.scale;
-    camera.updateScale(scale);
-    var cords = map.startPos();
-    camera.scrollTo(cords[0] - 2, cords[1] - 2);
-    $('#character').css({
-        top: (200 * scale) + 'px',
-        left: (200 * scale) + 'px'
-    });
+
+    var handleResize = function() {
+        console.log('Resizing ' + new Date().getTime());
+        background.draw();
+        var scale = background.scale;
+        camera.updateScale(scale);
+        camera.handleResize();
+        var cords = map.currentCoordinates();
+        camera.scrollTo(cords[0] - 2, cords[1] - 2);
+        $('#character').css({
+            top: (200 * scale) + 'px',
+            left: (200 * scale) + 'px'
+        });
+    };
+    handleResize();
+
+    window.onresize = handleResize;
+
     ui.showMessage('Spaceman');
 })();
