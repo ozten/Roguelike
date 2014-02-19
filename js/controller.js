@@ -47,7 +47,7 @@ if (!window.console) {
             e.keyCode === 115) {
             e.preventDefault();
             goDown();
-        // m key
+            // m key
         } else if (e.keyCode === 77) {
             e.preventDefault();
             camera.toggleMapOverlay();
@@ -79,49 +79,42 @@ if (!window.console) {
 */
 
     //alert(document.getElementById('viewport'));
-
-    var hammer = Hammer(document.getElementById('viewport'));
+    //document.getElementsByTagName('body')[0]
+    //document.getElementById('viewport')
+    var hammer = Hammer(document.getElementById('canvas'), {
+        drag: false
+    });
 
     hammer.on('swiperight', function(e) {
         e.preventDefault();
         e.gesture.preventDefault();
-        clearTimeout(touchTimeout);
         goRight();
     });
     hammer.on('swipeup', function(e) {
         e.preventDefault();
         e.gesture.preventDefault();
-        clearTimeout(touchTimeout);
         goUp();
     });
     hammer.on('swipeleft', function(e) {
         e.preventDefault();
         e.gesture.preventDefault();
-        clearTimeout(touchTimeout);
         goLeft();
     });
     hammer.on('swipedown', function(e) {
         e.preventDefault();
         e.gesture.preventDefault();
-        clearTimeout(touchTimeout);
         goDown();
     });
-    var touchTimeout;
-    hammer.on('touch', function(e) {
-        touchTimeout = setTimeout(function() {
-            goToScreenPoint(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY);
-        }, 300);
+
+    hammer.on('tap', function(e) {
+        e.gesture.preventDefault()
+
+        goToScreenPoint(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY);
+
 
     });
 
-    /*
-    ['drag, dragstart, dragend, dragup, dragdown, dragleft, dragright'].forEach(function(etype) {
-        hammer.on(etype, function(e) {
-            e.preventDefault();
-            e.gesture.preventDefault();
-        });
-    });
-    */
+
     function goLeft() {
         if (map.moveLeftAllowed()) {
             map.moveLeft();

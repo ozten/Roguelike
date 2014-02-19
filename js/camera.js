@@ -25,6 +25,7 @@
     $('#display-background').remove();
     $('#canvas').append('<canvas id="display-background" width="' + window.innerWidth +
       '" height="' + window.innerHeight + '"></canvas>');
+    console.log('AOK window size', window.innerWidth, window.innerHeight);
     displayCanvas = document.getElementById('display-background');
     console.log('Resize CAMERA X', camera.x);
     update();
@@ -65,6 +66,7 @@
     dCtx.save();
     console.log('CAMERA X', camera.x);
     dCtx.translate(camera.x, camera.y);
+    console.log(canvas, 0, 0, dCtx.width, dCtx.height);
     dCtx.drawImage(canvas, 0, 0);
     dCtx.restore();
     if (showMapOverlay) {
@@ -72,17 +74,25 @@
       //dCtx.scale(1/11, 1/11);
       console.log();
       dCtx.fillStyle = '#00FF00';
-      var widthOrHeight = displayCanvas.width < displayCanvas.height ? displayCanvas.width : displayCanvas.height;
-      dCtx.fillRect(15, 15,widthOrHeight  - 30, widthOrHeight - 30);
 
-      dCtx.drawImage(canvas, 20, 20, widthOrHeight - 40, widthOrHeight - 40);
+      var moWidth, moHeight;
+      if (displayCanvas.width < (displayCanvas.height * 11 / 15)) {
+        moWidth = displayCanvas.width;
+        moHeight = displayCanvas.width * 15 / 11;
+      } else {
+        moWidth = displayCanvas.height * 11 / 15;
+        moHeight = displayCanvas.height;
+      }
+      dCtx.fillRect(15, 15, moWidth - 30, moHeight - 30);
+
+      dCtx.drawImage(canvas, 20, 20, moWidth - 40, moHeight - 40);
       dCtx.restore();
     }
   }
 
   var showMapOverlay = false;
   camera.toggleMapOverlay = function() {
-    showMapOverlay = ! showMapOverlay;
+    showMapOverlay = !showMapOverlay;
     $('#character').toggle();
     update();
   };

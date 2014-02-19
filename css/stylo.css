@@ -1,3 +1,7 @@
+* { margin:0; padding:0; }
+/*html, body { width:100%; height:100%; }*/
+canvas { display:block; overflow: hidden;}
+#display-background{ display: block; overflow: hidden;}
 body {
   margin: 0px;
   padding: 0px;
@@ -35,9 +39,24 @@ h1 {
   top: 0px;
   left: 0px;
 }
-
 #inventory {
   position: absolute;
   bottom: 5%;
   right: 5%;
+}
+#fullscreen {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  height: 10%;
+  width: 20%;
+}
+:fullscreen #fullscreen {
+  display: none;
+}
+:-webkit-full-screen #fullscreen {
+  display: none;
+}
+:-moz-full-screen #fullscreen {
+  display: none;
 }
