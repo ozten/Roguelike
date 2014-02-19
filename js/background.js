@@ -44,7 +44,13 @@
               break;
             case 'a':
               ctx.fillStyle = "rgb(255,255,100)";
+              break;  
+            case 'R':
+              ctx.fillStyle = "rgb(100,149,237)"  
               break;
+            case 'X':
+              ctx.fillStyle = "rgb(0,0,0)"  
+              break;  
             default:
               console.log('UNKNOWN TIle Type');
               break;
