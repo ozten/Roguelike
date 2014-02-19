@@ -24,6 +24,8 @@
   var AIRLOCK = 'a';
   var SLEEPING_QUARTERS = 'q';
   var BED = 'b';
+  var RESTROOM = 'R';
+  var SPACE2 = 'X';
 
   map.startPos = function() {
     return [startX, startY];
@@ -173,7 +175,7 @@ _map[2][1] = 'H';
   };
 
   function walkableTile(x, y) {
-    return [PATH, AIRLOCK, SLEEPING_QUARTERS, '@'].indexOf(_map[y][x]) !== -1;
+    return [PATH, AIRLOCK, SLEEPING_QUARTERS, RESTROOM, '@'].indexOf(_map[y][x]) !== -1;
   }
 
   map.moveUpAllowed = function() {

@@ -19,6 +19,25 @@
       ['S', 'S', 'q', 'S', 'S']
     ]
   ];
+    var corridor3bedRoom = [
+    // Sleeping quarters
+    [
+      [' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', 'S', 'S', 'S'],
+      [' ', 'S', 'S', 'S', 'S'],
+      ['S', 'S', 'S', 'S', 'S'],
+      ['S', 'S', 'S', 'S', 'S'],
+      ['S', 'S', 'S', 'S', 'S']
+    ],
+    [
+      ['X', 'q', 'q', 'q', 'X'],
+      ['X', 'b', 'q', 'q', 'q'],
+      ['X', 'b', 'q', 'b', 'b'],
+      ['X', 'q', 'q', 'q', 'q'],
+      ['X', 'q', 'q', 'b', 'b'],
+      ['X', 'q', 'q', 'q', 'q']
+    ]
+  ];
   var deadEndCorridor2Airlock = [
 
     [
@@ -38,6 +57,24 @@
       ['S', 'S', 'S', 'S']
     ]
   ];
+   var Restroom = [
+    // Restroom
+    [
+      [' ', 'S', ' ', 'S', 'S'],
+      [' ', 'S', ' ', 'S', 'S'],
+      [' ', 'S', ' ', 'S', 'S'],
+      [' ', 'S', ' ', 'S', 'S'],
+      [' ', 'S', ' ', 'S', 'S'],
+      [' ', 'S', ' ', 'S', 'S']
+    ],
+    [
+      ['R', 'R', 'R'],
+      ['R', 'R', 'R'],
+      ['R', 'R', 'R'],
+      ['R', 'R', 'R'],
+      ['R', 'R', 'R']
+    ]
+  ];
 
   window.mapDecorator = function(map) {
     var dMap = [];
@@ -51,6 +88,8 @@
       for (var x1 = 0; x1 < map[0].length; x1++) {
         tryPattern(dMap, x1, y1, deadEndCorridor2Airlock);
         tryPattern(dMap, x1, y1, corridor2bedRoom);
+        tryPattern(dMap, x1, y1, corridor3bedRoom); 
+        tryPattern(dMap, x1, y1, Restroom);
 
       }
     }
