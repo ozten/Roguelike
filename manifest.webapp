@@ -1,6 +1,10 @@
 {
     "name": "Dev Roguelike",
     "description": "A Game",
+    "developer": {
+      "name": "Austin King",
+      "url": "http://ozten.com"
+    },
     "orientation": ["landscape"],
     "icons": {
         "256": "/img/icon/Roguelike256.png",
@@ -8,5 +12,5 @@
         "60": "/img/icon/Roguelike60.png",
         "30": "/img/icon/Roguelike30.png"
     },
-    "fullscreen": true
+    "fullscreen": "true"
 }
