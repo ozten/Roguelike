@@ -7,15 +7,11 @@
     scale = s;
 
     $('#character').css({
-      width: (100 * scale) + 'px',
-      height: (100 * scale) + 'px'
+      width: (7 * scale) + 'px',
+      height: (7 * scale) + 'px'
     });
   };
 
-  var canvas;
-  camera.setBackground = function(aCanvas) {
-    canvas = aCanvas;
-  }
 
   camera.x = 0;
   camera.y = 0;
@@ -53,23 +49,13 @@
     update();
   };
 
-  // From top left
-  camera.scrollTo = function(x, y) {
-    camera.x = 0 - x * 100 * scale;
-    camera.y = 0 - y * 100 * scale;
-    update();
-  };
-
+  // TODO remove calls to update and implement a renderLoop
   function update() {
-    if (!canvas) return;
-    var dCtx = displayCanvas.getContext('2d');
-    dCtx.save();
-    console.log('CAMERA X', camera.x);
-    dCtx.translate(camera.x, camera.y);
-    console.log(canvas, 0, 0, dCtx.width, dCtx.height);
-    dCtx.drawImage(canvas, 0, 0);
-    dCtx.restore();
+
+    window.camera.draw();
+
     if (showMapOverlay) {
+      var dCtx = displayCanvas.getContext('2d');
       dCtx.save();
       //dCtx.scale(1/11, 1/11);
       console.log();
@@ -97,11 +83,30 @@
     update();
   };
 
+  camera.screenPointToMapCoord = function(x, y) {
+
+    // map tiles are 100 * scale
+
+    //curX and curY are map coordinates, not pixels
+    console.log('screenPointToMapCoord x=', x, 'y=', y, 'tileScale=', camera.tileScale);
+    var mapX = Math.floor(x / camera.tileScale);
+    var mapY = Math.floor(y / camera.tileScale);
+
+    console.log('mapX', mapX, 'mapY=', mapY);
+
+    // Top Left in map space
+    var origin = camera.currentMapOrigin();
+    console.log(origin, mapX, mapY);
+    console.log('nearestWalkableTile called with', origin[0] + mapX, origin[1] + mapY);
+console.log('Calculated', map.nearestWalkableTile(origin[0] + mapX, origin[1] + mapY));
+    return map.nearestWalkableTile(origin[0] + mapX, origin[1] + mapY);
+  };
+
   camera.debugDraw = function(x, y) {
     var dCtx = displayCanvas.getContext('2d');
     dCtx.save();
     dCtx.fillStyle = '#00FF00';
-    dCtx.fillRect(x, y, 50, 50);
+    dCtx.fillRect(x - 25, y - 25, 50, 50);
     dCtx.restore();
   }
 

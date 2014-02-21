@@ -34,7 +34,7 @@
   map.tileType = function(x, y) {
     return _map[y][x];
   };
-
+  map.ready = false;
   map.generateMap = function() {
     var start = new Date();
 
@@ -171,10 +171,11 @@ _map[2][1] = 'H';
     curX = startX;
     curY = startY;
     console.log('Finished in ', new Date() - start, 'milliseconds');
-
+    map.ready = true;
   };
 
   function walkableTile(x, y) {
+    console.log('walkableTile', x, y);
     return [PATH, AIRLOCK, SLEEPING_QUARTERS, RESTROOM, '@'].indexOf(_map[y][x]) !== -1;
   }
 
@@ -267,34 +268,25 @@ _map[2][1] = 'H';
     return [curX, curY];
   };
 
-  map.screenPointToMapCoord = function(x, y) {
-    var scale = background.scale;
-    // map tiles are 100 * scale
-
-    //curX and curY are map coordinates, not pixels
-    var cameraOffsetX = 200 * scale;
-    var cameraOffsetY = 200 * scale;
-
-    var tileWidth = scale * 100;
-
-    var coords = [curX + Math.floor((x - cameraOffsetX) / tileWidth), curY + Math.floor((y - cameraOffsetY) / tileWidth)];
-
-    // Is this possible? check for fat fingering a close by space
-    if (!walkableTile(coords[0], coords[1])) {
-      // TODO measure distance and pick the closest...
-      if (walkableTile(coords[0], coords[1] + 1)) {
-        coords[1] += 1;
-      } else if (walkableTile(coords[0], coords[1] - 1)) {
-        coords[1] -= 1;
-      } else if (walkableTile(coords[0] + 1, coords[1])) {
-        coords[0] += 1;
-      } else if (walkableTile(coords[0] - 1, coords[1])) {
-        coords[0] -= 1;
-      } else {
-        coords = [];
+  map.nearestWalkableTile = function(x, y) {
+    var coords = [x, y];
+      // Is this possible? check for fat fingering a close by space
+      if (!walkableTile(x, y)) {
+        // TODO measure distance and pick the closest...
+        if (walkableTile(x, y + 1)) {
+          coords[1] += 1;
+        } else if (walkableTile(x, y - 1)) {
+          coords[1] -= 1;
+        } else if (walkableTile(x + 1, y)) {
+          coords[0] += 1;
+        } else if (walkableTile(x - 1, y)) {
+          coords[0] -= 1;
+        } else {
+          coords = [];
+        }
       }
-    }
-    return coords;
+      console.log('nearest returning', coords);
+      return coords;
   };
 
   map.map = _map;

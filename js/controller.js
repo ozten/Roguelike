@@ -4,6 +4,14 @@ if (!window.console) {
     };
 }
 
+// Disable iOS Safari jank
+// Works for Safari full screenmode
+// but not for Add to homescreen mode
+// https://gist.github.com/amolk/1599412
+document.body.addEventListener('touchmove', function(event) {
+    event.preventDefault();
+});
+
 (function() {
     var camera = window.camera;
     spaceman.stop();
@@ -107,7 +115,8 @@ if (!window.console) {
     });
 
     hammer.on('tap', function(e) {
-        e.gesture.preventDefault()
+        event.preventDefault();
+        e.gesture.preventDefault();
 
         goToScreenPoint(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY);
 
@@ -227,7 +236,7 @@ if (!window.console) {
     function goToScreenPoint(x, y) {
         camera.debugDraw(x, y);
         console.log('screen', x, y);
-        var coords = map.screenPointToMapCoord(x, y);
+        var coords = camera.screenPointToMapCoord(x, y);
         console.log(map.currentCoordinates());
         console.log(coords);
         if (coords.length === 2) {
@@ -245,16 +254,11 @@ if (!window.console) {
 
     var handleResize = function() {
         console.log('Resizing ' + new Date().getTime());
-        background.draw();
-        var scale = background.scale;
+        camera.draw();
+        var scale = camera.scale;
         camera.updateScale(scale);
         camera.handleResize();
         var cords = map.currentCoordinates();
-        camera.scrollTo(cords[0] - 2, cords[1] - 2);
-        $('#character').css({
-            top: (200 * scale) + 'px',
-            left: (200 * scale) + 'px'
-        });
     };
     handleResize();
 
