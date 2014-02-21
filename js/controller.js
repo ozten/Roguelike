@@ -115,7 +115,6 @@ document.body.addEventListener('touchmove', function(event) {
     });
 
     hammer.on('tap', function(e) {
-        event.preventDefault();
         e.gesture.preventDefault();
 
         goToScreenPoint(e.gesture.touches[0].pageX, e.gesture.touches[0].pageY);
