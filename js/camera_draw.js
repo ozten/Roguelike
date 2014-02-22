@@ -108,7 +108,7 @@
 
           var screenX = x * tileScale;
           var screenY = y * tileScale;
-          console.log(screenX, screenY, tileScale, tileScale, ctx.fillStyle);
+
           // 1, 6
           ctx.fillRect(screenX, screenY, tileScale, tileScale);
         }

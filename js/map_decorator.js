@@ -19,7 +19,8 @@
       ['S', 'S', 'q', 'S', 'S']
     ]
   ];
-    var corridor3bedRoom = [
+
+  var corridor3bedRoom = [
     // Sleeping quarters
     [
       [' ', ' ', ' ', ' ', ' '],
@@ -38,6 +39,7 @@
       ['X', 'q', 'q', 'q', 'q']
     ]
   ];
+
   var deadEndCorridor2Airlock = [
 
     [
@@ -57,7 +59,8 @@
       ['S', 'S', 'S', 'S']
     ]
   ];
-   var Restroom = [
+
+  var Restroom = [
     // Restroom
     [
       [' ', 'S', ' ', 'S', 'S'],
@@ -88,8 +91,8 @@
       for (var x1 = 0; x1 < map[0].length; x1++) {
         tryPattern(dMap, x1, y1, deadEndCorridor2Airlock);
         tryPattern(dMap, x1, y1, corridor2bedRoom);
-        tryPattern(dMap, x1, y1, corridor3bedRoom); 
-        tryPattern(dMap, x1, y1, Restroom);
+        //tryPattern(dMap, x1, y1, corridor3bedRoom);
+        //tryPattern(dMap, x1, y1, Restroom);
 
       }
     }
