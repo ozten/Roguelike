@@ -14,6 +14,8 @@
 </head>
 <body>
   <h1>Roguelike</h1>
+  <div id="health">Health <span>5</span><span class="remaining"></span><span class="missing"></span></div>
+  <div id="armor">Armor <span>1</span></div>
 
 <div id="viewport">
 
@@ -21,7 +23,9 @@
   </div>
   <img id="character" src="img/Rougelike-Spaceman-r-0.png" />
 </div>
+
 <div id="inventory"><span>0</span> Parts</div>
+
 <canvas id="foreground" width="300" height="300"></canvas>
 <button id="fullscreen">Full Screen</button>
 <script src="js/lib/jquery-2.0.3.min.js"></script>
