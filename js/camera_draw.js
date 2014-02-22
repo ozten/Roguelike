@@ -102,8 +102,8 @@
               ctx.fillStyle = "rgb(0,0,0)"
               break;
             default:
-              console.log('UNKNOWN TIle Type');
-              break;
+              console.log('UNKNOWN TIle Type', map.tileType(x + coords[0] - tileBufferX, y + coords[1] - tileBufferY));
+              continue;
           }
 
           var screenX = x * tileScale;

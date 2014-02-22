@@ -32,7 +32,14 @@
   };
 
   map.tileType = function(x, y) {
-    return _map[y][x];
+    try {
+      return _map[y][x];
+    } catch (e) {
+      console.log("AOK ", x, y, "not in ", _map);
+      window._map = map;
+      return null;
+    }
+
   };
   map.ready = false;
   map.generateMap = function() {
@@ -270,23 +277,23 @@ _map[2][1] = 'H';
 
   map.nearestWalkableTile = function(x, y) {
     var coords = [x, y];
-      // Is this possible? check for fat fingering a close by space
-      if (!walkableTile(x, y)) {
-        // TODO measure distance and pick the closest...
-        if (walkableTile(x, y + 1)) {
-          coords[1] += 1;
-        } else if (walkableTile(x, y - 1)) {
-          coords[1] -= 1;
-        } else if (walkableTile(x + 1, y)) {
-          coords[0] += 1;
-        } else if (walkableTile(x - 1, y)) {
-          coords[0] -= 1;
-        } else {
-          coords = [];
-        }
+    // Is this possible? check for fat fingering a close by space
+    if (!walkableTile(x, y)) {
+      // TODO measure distance and pick the closest...
+      if (walkableTile(x, y + 1)) {
+        coords[1] += 1;
+      } else if (walkableTile(x, y - 1)) {
+        coords[1] -= 1;
+      } else if (walkableTile(x + 1, y)) {
+        coords[0] += 1;
+      } else if (walkableTile(x - 1, y)) {
+        coords[0] -= 1;
+      } else {
+        coords = [];
       }
-      console.log('nearest returning', coords);
-      return coords;
+    }
+    console.log('nearest returning', coords);
+    return coords;
   };
 
   map.map = _map;
