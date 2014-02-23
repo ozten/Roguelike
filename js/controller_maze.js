@@ -1,4 +1,12 @@
 (function() {
+    var SPACE = 'S';
+    var PATH = ' ';
+    var AIRLOCK = 'a';
+    var SLEEPING_QUARTERS = 'q';
+    var BED = 'b';
+    var RESTROOM = 'R';
+    var SPACE2 = 'X';
+    var SPARE_PART = 'p';
 
     spaceman.stop();
     var movementInterval;
@@ -107,7 +115,7 @@
             return true;
         }
         return false;
-    };
+    }
 
     function goUp() {
         //console.log('Go up triggered');
@@ -181,7 +189,6 @@
             console.log(window.inventory);
 
             inventory.checkForItem(coords, function(item) {
-                console.log('Checked for items... got', item);
                 if (null !== item) {
                     ui.showMessage(item);
                 }
@@ -222,9 +229,21 @@
             previousCoords[1] !== coords[1]) {
             previousCoords = coords;
             var tileType = map.tileType(coords[0], coords[1]);
+            console.log('checking ', tileType);
             if ('a' === tileType) {
                 mazeController.stopMainMazeScene();
                 inventoryController.startInventoryScene();
+            } else if ('p' === tileType) {
+                console.log('Setting map tile type', map.setTileType, PATH);
+                map.setTileType(PATH);
+                console.log('Finished setting');
+                inventory.givePlayerParts(1, function(item) {
+                    console.log('give part cb', item);
+                    if (null !== item) {
+                        ui.showMessage(item);
+                        window.camera.draw();
+                    }
+                });
             }
         }
     }

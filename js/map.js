@@ -26,11 +26,15 @@
   var BED = 'b';
   var RESTROOM = 'R';
   var SPACE2 = 'X';
+  var SPARE_PART = 'p';
 
   map.startPos = function() {
     return [startX, startY];
   };
 
+  /**
+   * Safe to call on non-existant tiles
+   */
   map.tileType = function(x, y) {
     try {
       return _map[y][x];
@@ -39,7 +43,11 @@
       window._map = map;
       return null;
     }
-
+  };
+  map.setTileType = function(value) {
+    _map[curY][curX] = value;
+    console.log('tile is now');
+    console.log(_map[curY][curX]);
   };
   map.ready = false;
   map.generateMap = function() {
@@ -183,7 +191,7 @@ _map[2][1] = 'H';
 
   function walkableTile(x, y) {
     console.log('walkableTile', x, y);
-    return [PATH, AIRLOCK, SLEEPING_QUARTERS, RESTROOM, '@'].indexOf(_map[y][x]) !== -1;
+    return [PATH, AIRLOCK, SLEEPING_QUARTERS, RESTROOM, SPARE_PART, '@'].indexOf(_map[y][x]) !== -1;
   }
 
   map.moveUpAllowed = function() {

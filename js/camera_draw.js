@@ -1,8 +1,11 @@
 // TODO combine background.js and camera.js
-
 (function() {
   window.camera.tileScale = 1;
   console.log('defining window.camera.draw');
+
+  var partsImg = new Image();
+  partsImg.src = '/img/parts.png';
+
   window.camera.draw = function() {
     /*
      * Figure out where in the map we're located
@@ -69,18 +72,19 @@
       $('#character').css({
         left: ((tileBufferX) * tileScale) + 'px',
         top: ((tileBufferY) * tileScale) + 'px',
-        width: tileScale +'px'
+        width: tileScale + 'px'
       });
 
       for (var y = 0; y < tileHeight; y++) {
         for (var x = 0; x < tileWidth; x++) {
 
-
-          switch (map.tileType(x + coords[0] - tileBufferX, y + coords[1] - tileBufferY)) {
+          var tileType = map.tileType(x + coords[0] - tileBufferX, y + coords[1] - tileBufferY);
+          switch (tileType) {
             case 'S':
               ctx.fillStyle = "rgb(100,100,100)";
               break;
             case ' ':
+            case 'p':
               ctx.fillStyle = "rgb(255,100,100)";
               break;
             case '@':
@@ -96,13 +100,13 @@
               ctx.fillStyle = "rgb(255,255,100)";
               break;
             case 'R':
-              ctx.fillStyle = "rgb(100,149,237)"
+              ctx.fillStyle = "rgb(100,149,237)";
               break;
             case 'X':
-              ctx.fillStyle = "rgb(0,0,0)"
+              ctx.fillStyle = "rgb(0,0,0)";
               break;
             default:
-              console.log('UNKNOWN TIle Type', map.tileType(x + coords[0] - tileBufferX, y + coords[1] - tileBufferY));
+              console.log('UNKNOWN TIle Type', tileType);
               continue;
           }
 
@@ -111,6 +115,10 @@
 
           // 1, 6
           ctx.fillRect(screenX, screenY, tileScale, tileScale);
+          if ('p' === tileType) {
+            ctx.drawImage(partsImg, screenX, screenY, tileScale, tileScale);
+          }
+
         }
       }
 

@@ -7,22 +7,6 @@
         parts: 0
     };
 
-    function checkBedLocker(coords, cb) {
-        items[coords[0] + ',' + coords[1]] = false;
-        if (Math.random() < 0.9) {
-            if (Math.random() < 0.25) {
-                playerItems.parts += 5; // Five Parts!
-                cb('Player got 5 parts!');
-            } else {
-                playerItems.parts += 1;
-                cb('Player got 1 part');
-            }
-            $('#inventory span').text(playerItems.parts);
-        } else {
-            cb(null);
-        }
-    }
-
     window.inventory = {
         checkForItem: function(coords, cb) {
             if (false === items[coords[0] + ',' + coords[1]]) {
@@ -32,8 +16,25 @@
             if ('b' === tileType) {
                 checkBedLocker(coords, cb);
             }
+        },
+        givePlayerParts: function(num, cb) {
+            playerItems.parts += num; // Five Parts!
+            $('#inventory span').text(playerItems.parts);
+            cb('Player got ' + num + ' parts!');
+            console.log('finished');
         }
     };
-    console.log('Created inventory!', inventory);
 
+    function checkBedLocker(coords, cb) {
+        items[coords[0] + ',' + coords[1]] = false;
+        if (Math.random() < 0.9) {
+            if (Math.random() < 0.25) {
+                inventory.givePlayerParts(5);
+            } else {
+                inventory.givePlayerParts(1);
+            }
+        } else {
+            cb(null);
+        }
+    }
 })();

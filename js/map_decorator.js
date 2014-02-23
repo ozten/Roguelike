@@ -96,6 +96,17 @@
 
       }
     }
+
+    for (var y2 = 0; y2 < map.length; y2++) {
+      for (var x2 = 0; x2 < map[0].length; x2++) {
+        if (' ' === dMap[y2][x2] &&
+          Math.random() < 0.1) {
+          // Drop a spare part
+          dMap[y2][x2] = 'p';
+        }
+
+      }
+    }
     debugPrintMap(dMap);
     return dMap;
   };
