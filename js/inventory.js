@@ -9,8 +9,8 @@
 
     function checkBedLocker(coords, cb) {
         items[coords[0] + ',' + coords[1]] = false;
-        if (Math.random() < 0.9) {
-            if (Math.random() < 0.25) {
+        if (Math.random() < 0.7) {
+            if (Math.random() < 0.15) {
                 playerItems.parts += 5; // Five Parts!
                 cb('Player got 5 parts!');
             } else {
@@ -19,7 +19,7 @@
             }
             $('#inventory span').text(playerItems.parts);
         } else {
-            cb(null);
+            cb('You got nothing!');
         }
     }
 

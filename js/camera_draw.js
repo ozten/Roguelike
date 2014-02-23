@@ -78,7 +78,7 @@
 
           switch (map.tileType(x + coords[0] - tileBufferX, y + coords[1] - tileBufferY)) {
             case 'S':
-              ctx.fillStyle = "rgb(100,100,100)";
+              ctx.fillStyle = "rgb(175,175,175)";
               break;
             case ' ':
               ctx.fillStyle = "rgb(255,100,100)";
@@ -92,15 +92,24 @@
             case 'b':
               ctx.fillStyle = "rgb(0,175,175)";
               break;
+            case 's':
+              ctx.fillStyle = "rgb(100,100,100)";
+              break;  
             case 'a':
               ctx.fillStyle = "rgb(255,255,100)";
               break;
             case 'R':
               ctx.fillStyle = "rgb(100,149,237)"
-              break;
+              break; 
+            case 'd':
+              ctx.fillStyle = "rgb(255,128,0)"
+              break; 
             case 'X':
               ctx.fillStyle = "rgb(0,0,0)"
               break;
+            case 'c':
+              ctx.fillStyle = "rgb(255,204,204)"
+              break;  
             default:
               console.log('UNKNOWN TIle Type');
               break;
