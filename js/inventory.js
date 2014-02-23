@@ -21,7 +21,6 @@
             playerItems.parts += num; // Five Parts!
             $('#inventory span').text(playerItems.parts);
             cb('Player got ' + num + ' parts!');
-            console.log('finished');
         }
     };
 
@@ -29,9 +28,9 @@
         items[coords[0] + ',' + coords[1]] = false;
         if (Math.random() < 0.9) {
             if (Math.random() < 0.25) {
-                inventory.givePlayerParts(5);
+                inventory.givePlayerParts(5, cb);
             } else {
-                inventory.givePlayerParts(1);
+                inventory.givePlayerParts(1, cb);
             }
         } else {
             cb(null);
