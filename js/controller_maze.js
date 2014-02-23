@@ -7,6 +7,7 @@
     var RESTROOM = 'R';
     var SPACE2 = 'X';
     var SPARE_PART = 'p';
+    var ENEMY = 'e';
 
     spaceman.stop();
     var movementInterval;
@@ -119,11 +120,14 @@
 
     function goUp() {
         //console.log('Go up triggered');
+        console.log('goUp');
         if (map.moveUpAllowed()) {
+            console.log('walk up is cool');
             map.moveUp();
             camera.stepUp();
             fireNewPositionEvents();
         } else if (map.hasItemUp()) {
+            console.log('item up');
             var coords = map.currentCoordinates();
             coords[1] = coords[1] - 1;
             inventory.checkForItem(coords, function(item) {
@@ -131,6 +135,13 @@
                     ui.showMessage(item);
                 }
             });
+        } else if (map.hasEnemyUp()) {
+            var ourCoords = map.currentCoordinates();
+            var theirCoords = map.currentCoordinates();
+            theirCoords[1] = theirCoords[1] - 1;
+            combat.fight(ourCoords, theirCoords);
+        } else {
+            console.log('???');
         }
     }
 
@@ -144,7 +155,6 @@
             camera.stepRight();
             fireNewPositionEvents();
         } else if (map.hasItemOnRight()) {
-
             var coords = map.currentCoordinates();
             coords[0] = coords[0] + 1;
             inventory.checkForItem(coords, function(item) {
@@ -152,7 +162,11 @@
                     ui.showMessage(item);
                 }
             });
-
+        } else if (map.hasEnemyOnRight()) {
+            var ourCoords = map.currentCoordinates();
+            var theirCoords = map.currentCoordinates();
+            theirCoords[0] = theirCoords[0] + 1;
+            combat.fight(ourCoords, theirCoords);
         }
     }
 
@@ -169,6 +183,11 @@
                     ui.showMessage(item);
                 }
             });
+        } else if (map.hasEnemyDown()) {
+            var ourCoords = map.currentCoordinates();
+            var theirCoords = map.currentCoordinates();
+            theirCoords[1] = theirCoords[1] + 1;
+            combat.fight(ourCoords, theirCoords);
         }
     }
 
@@ -193,6 +212,11 @@
                     ui.showMessage(item);
                 }
             });
+        } else if (map.hasEnemyOnLeft()) {
+            var ourCoords = map.currentCoordinates();
+            var theirCoords = map.currentCoordinates();
+            theirCoords[0] = theirCoords[0] - 1;
+            combat.fight(ourCoords, theirCoords);
         }
     }
 
@@ -230,10 +254,10 @@
             previousCoords = coords;
             var tileType = map.tileType(coords[0], coords[1]);
             console.log('checking ', tileType);
-            if ('a' === tileType) {
+            if (AIRLOCK === tileType) {
                 mazeController.stopMainMazeScene();
                 inventoryController.startInventoryScene();
-            } else if ('p' === tileType) {
+            } else if (SPARE_PART === tileType) {
                 console.log('Setting map tile type', map.setTileType, PATH);
                 map.setTileType(PATH);
                 console.log('Finished setting');

@@ -27,6 +27,7 @@
   var RESTROOM = 'R';
   var SPACE2 = 'X';
   var SPARE_PART = 'p';
+  var ENEMY = 'e';
 
   map.startPos = function() {
     return [startX, startY];
@@ -44,10 +45,12 @@
       return null;
     }
   };
-  map.setTileType = function(value) {
-    _map[curY][curX] = value;
-    console.log('tile is now');
-    console.log(_map[curY][curX]);
+  map.setTileType = function(value, x, y) {
+    if (!x || !y) {
+      _map[curY][curX] = value;
+    } else {
+      _map[y][x] = value;
+    }
   };
   map.ready = false;
   map.generateMap = function() {
@@ -274,6 +277,42 @@ _map[2][1] = 'H';
   map.hasItemDown = function() {
     try {
       return isInventoryTile(curX, curY + 1);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  function isEnemyTile(x, y) {
+    return [ENEMY].indexOf(_map[y][x]) !== -1;
+  }
+
+  map.hasEnemyOnLeft = function() {
+    try {
+      return isEnemyTile(curX - 1, curY);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  map.hasEnemyOnRight = function() {
+    try {
+      return isEnemyTile(curX + 1, curY);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  map.hasEnemyUp = function() {
+    try {
+      return isEnemyTile(curX, curY - 1);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  map.hasEnemyDown = function() {
+    try {
+      return isEnemyTile(curX, curY + 1);
     } catch (e) {
       return false;
     }

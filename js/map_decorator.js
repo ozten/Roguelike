@@ -1,5 +1,16 @@
 (function() {
 
+
+  var SPACE = 'S';
+  var PATH = ' ';
+  var AIRLOCK = 'a';
+  var SLEEPING_QUARTERS = 'q';
+  var BED = 'b';
+  var RESTROOM = 'R';
+  var SPACE2 = 'X';
+  var SPARE_PART = 'p';
+  var ENEMY = 'e';
+
   var corridor2bedRoom = [
     // Sleeping quarters
     [
@@ -99,10 +110,13 @@
 
     for (var y2 = 0; y2 < map.length; y2++) {
       for (var x2 = 0; x2 < map[0].length; x2++) {
-        if (' ' === dMap[y2][x2] &&
-          Math.random() < 0.1) {
-          // Drop a spare part
-          dMap[y2][x2] = 'p';
+        if (' ' === dMap[y2][x2]) {
+          if (Math.random() < 0.1) {
+            // Drop a spare part
+            dMap[y2][x2] = SPARE_PART;
+          } else if (Math.random() < 0.1) {
+            dMap[y2][x2] = ENEMY;
+          }
         }
 
       }

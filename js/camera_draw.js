@@ -3,8 +3,23 @@
   window.camera.tileScale = 1;
   console.log('defining window.camera.draw');
 
+  var SPACE = 'S';
+  var PATH = ' ';
+  var AIRLOCK = 'a';
+  var SLEEPING_QUARTERS = 'q';
+  var BED = 'b';
+  var RESTROOM = 'R';
+  var SPACE2 = 'X';
+  var SPARE_PART = 'p';
+  var ENEMY = 'e';
+
   var partsImg = new Image();
   partsImg.src = '/img/parts.png';
+
+  var enemyImg = new Image();
+  enemyImg.src = '/img/enemy.png';
+
+
 
   window.camera.draw = function() {
     /*
@@ -80,17 +95,18 @@
 
           var tileType = map.tileType(x + coords[0] - tileBufferX, y + coords[1] - tileBufferY);
           switch (tileType) {
-            case 'S':
+            case SPACE:
               ctx.fillStyle = "rgb(100,100,100)";
               break;
-            case ' ':
-            case 'p':
+            case PATH:
+            case SPARE_PART:
+            case ENEMY:
               ctx.fillStyle = "rgb(255,100,100)";
               break;
             case '@':
               ctx.fillStyle = "rgb(255,200,200)";
               break;
-            case 'q':
+            case SLEEPING_QUARTERS:
               ctx.fillStyle = "rgb(75,75,75)";
               break;
             case 'b':
@@ -115,8 +131,10 @@
 
           // 1, 6
           ctx.fillRect(screenX, screenY, tileScale, tileScale);
-          if ('p' === tileType) {
+          if (SPARE_PART === tileType) {
             ctx.drawImage(partsImg, screenX, screenY, tileScale, tileScale);
+          } else if (ENEMY === tileType) {
+ctx.drawImage(enemyImg, screenX, screenY, tileScale, tileScale);
           }
 
         }
