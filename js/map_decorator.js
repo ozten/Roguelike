@@ -1,6 +1,21 @@
 (function() {
 
+<<<<<<< HEAD
     var corridor2bedRoom = [
+=======
+
+  var SPACE = 'S';
+  var PATH = ' ';
+  var AIRLOCK = 'a';
+  var SLEEPING_QUARTERS = 'q';
+  var BED = 'b';
+  var RESTROOM = 'R';
+  var SPACE2 = 'X';
+  var SPARE_PART = 'p';
+  var ENEMY = 'e';
+
+  var corridor2bedRoom = [
+>>>>>>> 08586e0d777e04de48bd1dcd237e2da5d5cc9716
     // Sleeping quarters
     [
       ['S', 'S', ' ', 'S', 'S'],
@@ -19,7 +34,8 @@
       ['s', 's', 'q', 's', 's']
     ]
   ];
-    var corridor3bedRoom = [
+
+  var corridor3bedRoom = [
     // Sleeping quarters
     [
       [' ', ' ', ' ', ' ', ' '],
@@ -38,6 +54,7 @@
       ['s', 'q', 'q', 'q', 'q']
     ]
   ];
+
   var deadEndCorridor2Airlock = [
 
     [
@@ -57,7 +74,8 @@
       ['s', 's', 's', 's', 's']
     ]
   ];
-   var Restroom = [
+
+  var Restroom = [
     // Restroom
     [
       [' ', 'S', ' ', 'S', 'S'],
@@ -201,7 +219,7 @@
       for (var x1 = 0; x1 < map[0].length; x1++) {
         tryPattern(dMap, x1, y1, deadEndCorridor2Airlock);
         tryPattern(dMap, x1, y1, corridor2bedRoom);
-        tryPattern(dMap, x1, y1, corridor3bedRoom); 
+        tryPattern(dMap, x1, y1, corridor3bedRoom);
         tryPattern(dMap, x1, y1, Restroom);
         tryPattern(dMap, x1, y1, DiningHall);
         tryPattern(dMap, x1, y1, corridor1);
@@ -210,6 +228,20 @@
         tryPattern(dMap, x1, y1, corridor4);
         tryPattern(dMap, x1, y1, corridor5);
         tryPattern(dMap, x1, y1, fill1);
+      }
+    }
+
+    for (var y2 = 0; y2 < map.length; y2++) {
+      for (var x2 = 0; x2 < map[0].length; x2++) {
+        if (' ' === dMap[y2][x2]) {
+          if (Math.random() < 0.1) {
+            // Drop a spare part
+            dMap[y2][x2] = SPARE_PART;
+          } else if (Math.random() < 0.1) {
+            dMap[y2][x2] = ENEMY;
+          }
+        }
+
       }
     }
     debugPrintMap(dMap);

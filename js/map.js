@@ -27,14 +27,36 @@
   var SLEEPING_QUARTERS = 'q';
   var BED = 'b';
   var RESTROOM = 'R';
+<<<<<<< HEAD
   var DINING_HALL = 'd';
+=======
+  var SPACE2 = 'X';
+  var SPARE_PART = 'p';
+  var ENEMY = 'e';
+>>>>>>> 08586e0d777e04de48bd1dcd237e2da5d5cc9716
 
   map.startPos = function() {
     return [startX, startY];
   };
 
+  /**
+   * Safe to call on non-existant tiles
+   */
   map.tileType = function(x, y) {
-    return _map[y][x];
+    try {
+      return _map[y][x];
+    } catch (e) {
+      console.log("AOK ", x, y, "not in ", _map);
+      window._map = map;
+      return null;
+    }
+  };
+  map.setTileType = function(value, x, y) {
+    if (!x || !y) {
+      _map[curY][curX] = value;
+    } else {
+      _map[y][x] = value;
+    }
   };
   map.ready = false;
   map.generateMap = function() {
@@ -178,7 +200,11 @@ _map[2][1] = 'H';
 
   function walkableTile(x, y) {
     console.log('walkableTile', x, y);
+<<<<<<< HEAD
     return [PATH, AIRLOCK, SLEEPING_QUARTERS, CORRIDOR, RESTROOM, DINING_HALL, '@'].indexOf(_map[y][x]) !== -1;
+=======
+    return [PATH, AIRLOCK, SLEEPING_QUARTERS, RESTROOM, SPARE_PART, '@'].indexOf(_map[y][x]) !== -1;
+>>>>>>> 08586e0d777e04de48bd1dcd237e2da5d5cc9716
   }
 
   map.moveUpAllowed = function() {
@@ -266,29 +292,65 @@ _map[2][1] = 'H';
     }
   };
 
+  function isEnemyTile(x, y) {
+    return [ENEMY].indexOf(_map[y][x]) !== -1;
+  }
+
+  map.hasEnemyOnLeft = function() {
+    try {
+      return isEnemyTile(curX - 1, curY);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  map.hasEnemyOnRight = function() {
+    try {
+      return isEnemyTile(curX + 1, curY);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  map.hasEnemyUp = function() {
+    try {
+      return isEnemyTile(curX, curY - 1);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  map.hasEnemyDown = function() {
+    try {
+      return isEnemyTile(curX, curY + 1);
+    } catch (e) {
+      return false;
+    }
+  };
+
   map.currentCoordinates = function() {
     return [curX, curY];
   };
 
   map.nearestWalkableTile = function(x, y) {
     var coords = [x, y];
-      // Is this possible? check for fat fingering a close by space
-      if (!walkableTile(x, y)) {
-        // TODO measure distance and pick the closest...
-        if (walkableTile(x, y + 1)) {
-          coords[1] += 1;
-        } else if (walkableTile(x, y - 1)) {
-          coords[1] -= 1;
-        } else if (walkableTile(x + 1, y)) {
-          coords[0] += 1;
-        } else if (walkableTile(x - 1, y)) {
-          coords[0] -= 1;
-        } else {
-          coords = [];
-        }
+    // Is this possible? check for fat fingering a close by space
+    if (!walkableTile(x, y)) {
+      // TODO measure distance and pick the closest...
+      if (walkableTile(x, y + 1)) {
+        coords[1] += 1;
+      } else if (walkableTile(x, y - 1)) {
+        coords[1] -= 1;
+      } else if (walkableTile(x + 1, y)) {
+        coords[0] += 1;
+      } else if (walkableTile(x - 1, y)) {
+        coords[0] -= 1;
+      } else {
+        coords = [];
       }
-      console.log('nearest returning', coords);
-      return coords;
+    }
+    console.log('nearest returning', coords);
+    return coords;
   };
 
   map.map = _map;
