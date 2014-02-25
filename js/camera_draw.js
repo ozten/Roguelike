@@ -92,11 +92,9 @@
 
       for (var y = 0; y < tileHeight; y++) {
         for (var x = 0; x < tileWidth; x++) {
-
-          var tileType = map.tileType(x + coords[0] - tileBufferX, y + coords[1] - tileBufferY);
-          switch (tileType) {
+          switch (map.tileType(x + coords[0] - tileBufferX, y + coords[1] - tileBufferY)) {
             case SPACE:
-              ctx.fillStyle = "rgb(100,100,100)";
+              ctx.fillStyle = "rgb(175,175,175)";
               break;
             case PATH:
             case SPARE_PART:
@@ -112,15 +110,24 @@
             case 'b':
               ctx.fillStyle = "rgb(0,175,175)";
               break;
+            case 's':
+              ctx.fillStyle = "rgb(100,100,100)";
+              break;  
             case 'a':
               ctx.fillStyle = "rgb(255,255,100)";
               break;
             case 'R':
-              ctx.fillStyle = "rgb(100,149,237)";
-              break;
+\              ctx.fillStyle = "rgb(100,149,237)"
+              break; 
+            case 'd':
+              ctx.fillStyle = "rgb(255,128,0)"
+              break; 
             case 'X':
               ctx.fillStyle = "rgb(0,0,0)";
               break;
+            case 'c':
+              ctx.fillStyle = "rgb(255,204,204)"
+              break;  
             default:
               console.log('UNKNOWN TIle Type', tileType);
               continue;

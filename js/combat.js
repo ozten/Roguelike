@@ -46,6 +46,7 @@
             console.log(ourAttack, '>=', enemyAttack);
             if (ourAttack >= enemyAttack) {
                 enemy.health -= 1;
+                ui.showMessage('You crushed the droid.');
                 if (enemy.health <= 0) {
                     ui.showMessage('Boom!');
                     map.setTileType(PATH, enemyCoords[0], enemyCoords[1]);

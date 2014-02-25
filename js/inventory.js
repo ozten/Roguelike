@@ -33,7 +33,7 @@
                 inventory.givePlayerParts(1, cb);
             }
         } else {
-            cb(null);
+            cb('You got nothing!');
         }
     }
 })();
