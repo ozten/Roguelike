@@ -1,9 +1,5 @@
 (function() {
 
-<<<<<<< HEAD
-    var corridor2bedRoom = [
-=======
-
   var SPACE = 'S';
   var PATH = ' ';
   var AIRLOCK = 'a';
@@ -14,8 +10,8 @@
   var SPARE_PART = 'p';
   var ENEMY = 'e';
 
+ 
   var corridor2bedRoom = [
->>>>>>> 08586e0d777e04de48bd1dcd237e2da5d5cc9716
     // Sleeping quarters
     [
       ['S', 'S', ' ', 'S', 'S'],

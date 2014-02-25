@@ -92,18 +92,9 @@
 
       for (var y = 0; y < tileHeight; y++) {
         for (var x = 0; x < tileWidth; x++) {
-
-<<<<<<< HEAD
-
           switch (map.tileType(x + coords[0] - tileBufferX, y + coords[1] - tileBufferY)) {
-            case 'S':
-              ctx.fillStyle = "rgb(175,175,175)";
-=======
-          var tileType = map.tileType(x + coords[0] - tileBufferX, y + coords[1] - tileBufferY);
-          switch (tileType) {
             case SPACE:
-              ctx.fillStyle = "rgb(100,100,100)";
->>>>>>> 08586e0d777e04de48bd1dcd237e2da5d5cc9716
+              ctx.fillStyle = "rgb(175,175,175)";
               break;
             case PATH:
             case SPARE_PART:
@@ -126,16 +117,11 @@
               ctx.fillStyle = "rgb(255,255,100)";
               break;
             case 'R':
-<<<<<<< HEAD
-              ctx.fillStyle = "rgb(100,149,237)"
+\              ctx.fillStyle = "rgb(100,149,237)"
               break; 
             case 'd':
               ctx.fillStyle = "rgb(255,128,0)"
               break; 
-=======
-              ctx.fillStyle = "rgb(100,149,237)";
-              break;
->>>>>>> 08586e0d777e04de48bd1dcd237e2da5d5cc9716
             case 'X':
               ctx.fillStyle = "rgb(0,0,0)";
               break;

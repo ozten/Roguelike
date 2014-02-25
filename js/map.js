@@ -27,13 +27,10 @@
   var SLEEPING_QUARTERS = 'q';
   var BED = 'b';
   var RESTROOM = 'R';
-<<<<<<< HEAD
   var DINING_HALL = 'd';
-=======
   var SPACE2 = 'X';
   var SPARE_PART = 'p';
   var ENEMY = 'e';
->>>>>>> 08586e0d777e04de48bd1dcd237e2da5d5cc9716
 
   map.startPos = function() {
     return [startX, startY];
@@ -200,11 +197,7 @@ _map[2][1] = 'H';
 
   function walkableTile(x, y) {
     console.log('walkableTile', x, y);
-<<<<<<< HEAD
-    return [PATH, AIRLOCK, SLEEPING_QUARTERS, CORRIDOR, RESTROOM, DINING_HALL, '@'].indexOf(_map[y][x]) !== -1;
-=======
-    return [PATH, AIRLOCK, SLEEPING_QUARTERS, RESTROOM, SPARE_PART, '@'].indexOf(_map[y][x]) !== -1;
->>>>>>> 08586e0d777e04de48bd1dcd237e2da5d5cc9716
+    return [PATH, AIRLOCK, SLEEPING_QUARTERS, CORRIDOR, RESTROOM, DINING_HALL, SPARE_PART, '@'].indexOf(_map[y][x]) !== -1;
   }
 
   map.moveUpAllowed = function() {
