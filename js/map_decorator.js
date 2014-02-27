@@ -9,6 +9,10 @@
   var SPACE2 = 'X';
   var SPARE_PART = 'p';
   var ENEMY = 'e';
+  var DININGHALL = 'd';
+  var CORRIDOR = 'c';
+  var REPLACEDSPACE = 's';
+  var SPARE_PART = 'p';
 
  
   var corridor2bedRoom = [

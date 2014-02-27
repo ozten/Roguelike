@@ -12,6 +12,9 @@
   var SPACE2 = 'X';
   var SPARE_PART = 'p';
   var ENEMY = 'e';
+  var DINGINGHALL = 'd';
+  var CORRIDOR = 'c';
+  var REPLACEDSPACE = 's';
 
   var partsImg = new Image();
   partsImg.src = '/img/parts.png';
@@ -97,7 +100,11 @@
               ctx.fillStyle = "rgb(175,175,175)";
               break;
             case PATH:
+              ctx.fillStyle = "rgb(255,100,100)";
+              break;
             case SPARE_PART:
+              ctx.fillStyle = "rgb(255,100,100)";
+              break;
             case ENEMY:
               ctx.fillStyle = "rgb(255,100,100)";
               break;
@@ -107,26 +114,26 @@
             case SLEEPING_QUARTERS:
               ctx.fillStyle = "rgb(75,75,75)";
               break;
-            case 'b':
+            case BED:
               ctx.fillStyle = "rgb(0,175,175)";
               break;
-            case 's':
+            case REPLACEDSPACE:
               ctx.fillStyle = "rgb(100,100,100)";
               break;  
-            case 'a':
+            case AIRLOCK:
               ctx.fillStyle = "rgb(255,255,100)";
               break;
-            case 'R':
-\              ctx.fillStyle = "rgb(100,149,237)"
+            case RESTROOM:
+              ctx.fillStyle = "rgb(100,149,237)";
               break; 
-            case 'd':
-              ctx.fillStyle = "rgb(255,128,0)"
+            case DININGHALL:
+              ctx.fillStyle = "rgb(255,128,0)";
               break; 
-            case 'X':
+            case SPACE2:
               ctx.fillStyle = "rgb(0,0,0)";
               break;
-            case 'c':
-              ctx.fillStyle = "rgb(255,204,204)"
+            case CORRIDOR:
+              ctx.fillStyle = "rgb(255,204,204)";
               break;  
             default:
               console.log('UNKNOWN TIle Type', tileType);
@@ -141,7 +148,7 @@
           if (SPARE_PART === tileType) {
             ctx.drawImage(partsImg, screenX, screenY, tileScale, tileScale);
           } else if (ENEMY === tileType) {
-ctx.drawImage(enemyImg, screenX, screenY, tileScale, tileScale);
+            ctx.drawImage(enemyImg, screenX, screenY, tileScale, tileScale);
           }
 
         }

@@ -24,10 +24,20 @@ h1 {
   background-color: rgba(255, 255, 255, 0.3);
 }
 #health {
-  left: 20%;
+  top: 5%;
+  right: 5%;
 }
 #armor {
-  left: 30%;
+  top: 15%;
+  right: 5%;
+}
+#inventory {
+  position: absolute;
+  top: 25%;
+  right: 5%;
+
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 #viewport {
@@ -41,7 +51,6 @@ h1 {
   left: 0px;
 }
 #background {
-
 }
 
 #movie, #movie2 {
@@ -54,14 +63,7 @@ h1 {
   top: 0px;
   left: 0px;
 }
-#inventory {
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
 
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.3);
-}
 #fullscreen {
   position: absolute;
   top: 50%;
