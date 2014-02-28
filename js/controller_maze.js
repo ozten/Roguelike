@@ -8,7 +8,7 @@
     var SPACE2 = 'X';
     var SPARE_PART = 'p';
     var ENEMY = 'e';
-    var DININGHALL = 'd';
+    var DINING_HALL = 'd';
     var CORRIDOR = 'c';
     var REPLACEDSPACE = 's';
  
