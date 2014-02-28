@@ -12,6 +12,9 @@
   var SPACE2 = 'X';
   var SPARE_PART = 'p';
   var ENEMY = 'e';
+  var DINING_HALL = 'd';
+  var CORRIDOR = 'c';
+  var REPLACEDSPACE = 's';
 
   var partsImg = new Image();
   partsImg.src = '/img/parts.png';
@@ -97,37 +100,41 @@
               ctx.fillStyle = "rgb(175,175,175)";
               break;
             case PATH:
-            case SPARE_PART:
-            case ENEMY:
               ctx.fillStyle = "rgb(255,100,100)";
               break;
-            case '@':
-              ctx.fillStyle = "rgb(255,200,200)";
+            case AIRLOCK:
+              ctx.fillStyle = "rgb(255,255,100)";
               break;
             case SLEEPING_QUARTERS:
               ctx.fillStyle = "rgb(75,75,75)";
               break;
-            case 'b':
+            case BED:
               ctx.fillStyle = "rgb(0,175,175)";
               break;
-            case 's':
-              ctx.fillStyle = "rgb(100,100,100)";
-              break;  
-            case 'a':
-              ctx.fillStyle = "rgb(255,255,100)";
-              break;
-            case 'R':
-\              ctx.fillStyle = "rgb(100,149,237)"
+            case RESTROOM:
+              ctx.fillStyle = "rgb(100,149,237)";
               break; 
-            case 'd':
-              ctx.fillStyle = "rgb(255,128,0)"
-              break; 
-            case 'X':
+            case SPACE2:
               ctx.fillStyle = "rgb(0,0,0)";
               break;
-            case 'c':
-              ctx.fillStyle = "rgb(255,204,204)"
+            case SPARE_PART:
+              ctx.fillStyle = "rgb(250,250,0)";
+              break;
+            case ENEMY:
+              ctx.fillStyle = "rgb(255,100,50)";
+              break;
+            case DINING_HALL:
+              ctx.fillStyle = "rgb(255,128,0)";
+              break; 
+            case CORRIDOR:
+              ctx.fillStyle = "rgb(220,150,150)";
               break;  
+            case REPLACEDSPACE:
+              ctx.fillStyle = "rgb(100,100,100)";
+              break;  
+            case '@':
+              ctx.fillStyle = "rgb(255,200,200)";
+              break;
             default:
               console.log('UNKNOWN TIle Type', tileType);
               continue;
@@ -138,10 +145,10 @@
 
           // 1, 6
           ctx.fillRect(screenX, screenY, tileScale, tileScale);
-          if (SPARE_PART === tileType) {
+          if (SPARE_PART === map.tileType) {
             ctx.drawImage(partsImg, screenX, screenY, tileScale, tileScale);
-          } else if (ENEMY === tileType) {
-ctx.drawImage(enemyImg, screenX, screenY, tileScale, tileScale);
+          } else if (ENEMY === map.tileType) {
+            ctx.drawImage(enemyImg, screenX, screenY, tileScale, tileScale);
           }
 
         }

@@ -20,17 +20,17 @@
 
 
   var SPACE = 'S';
-  var SPACE_REPLACED = 's';
   var PATH = ' ';
-  var CORRIDOR = 'c';
   var AIRLOCK = 'a';
   var SLEEPING_QUARTERS = 'q';
   var BED = 'b';
   var RESTROOM = 'R';
-  var DINING_HALL = 'd';
   var SPACE2 = 'X';
   var SPARE_PART = 'p';
   var ENEMY = 'e';
+  var DINING_HALL = 'd';
+  var CORRIDOR = 'c';
+  var REPLACEDSPACE = 's';
 
   map.startPos = function() {
     return [startX, startY];
@@ -43,7 +43,7 @@
     try {
       return _map[y][x];
     } catch (e) {
-      console.log("AOK ", x, y, "not in ", _map);
+      console.log("AOK", x, y, "not in ", _map);
       window._map = map;
       return null;
     }
@@ -197,7 +197,7 @@ _map[2][1] = 'H';
 
   function walkableTile(x, y) {
     console.log('walkableTile', x, y);
-    return [PATH, AIRLOCK, SLEEPING_QUARTERS, CORRIDOR, RESTROOM, DINING_HALL, SPARE_PART, '@'].indexOf(_map[y][x]) !== -1;
+    return [PATH, AIRLOCK, SLEEPING_QUARTERS, RESTROOM, SPARE_PART, DINING_HALL, CORRIDOR, '@'].indexOf(_map[y][x]) !== -1;
   }
 
   map.moveUpAllowed = function() {

@@ -8,6 +8,10 @@
     var SPACE2 = 'X';
     var SPARE_PART = 'p';
     var ENEMY = 'e';
+    var DINING_HALL = 'd';
+    var CORRIDOR = 'c';
+    var REPLACEDSPACE = 's';
+ 
 
     spaceman.stop();
     var movementInterval;
