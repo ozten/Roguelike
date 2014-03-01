@@ -1,5 +1,5 @@
 {
-    "name": "Dev Roguelike",
+    "name": "Space Asshole",
     "description": "A Game",
     "developer": {
       "name": "Austin King",
@@ -13,4 +13,5 @@
         "30": "/img/icon/Roguelike30.png"
     },
     "fullscreen": "true"
+    "chrome": { "navigation": true }
 }
