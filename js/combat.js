@@ -11,12 +11,17 @@
     var SPARE_PART = 'p';
     var ENEMY = 'e';
 
-
+    var playerDamage = null;
     var playerHealth = 5;
+    var playerArmor = 2;
 
     function updateHealth() {
         $('#health span.val').text(playerHealth);
     }
+    function updateArmor() {
+        $('#armor span.val').text(playerArmor);
+    }
+
 
     var enemies = {};
 
@@ -62,20 +67,28 @@
                 ui.showMessage('Enemy takes damage! ' + enemy.health);
             } else {
                 // combat and armor
-                playerHealth -= 1;
-                ui.showMessage('Ouch');
-                updateHealth();
-                if (playerHealth <= 0) {
-                    clearInterval(fightClubInt);
-                    fightClubInt = undefined;
-                    // TODO make a game over controller
-                    setTimeout(function() {
-                        $('h1').text('Game Over').show();
-                    }, 1000);
-                    mazeController.stopMainMazeScene();
-                    console.log('Game over fight interval');
-                    return;
+                if (playerArmor <= 0) {
+                    playerHealth -= 1;
+                    ui.showMessage('Ouch');
+                    updateHealth();
+                    }
+                else {
+                    playerArmor -= 1;
+                    updateArmor();
+                    ui.showMessage('Clang');
+                    console.log('Lost 1 Armor');                
+            if (playerHealth <= 0) {
+                clearInterval(fightClubInt);
+                fightClubInt = undefined;
+                // TODO make a game over controller
+                setTimeout(function() {
+                    $('h1').text('Game Over').show();
+                }, 1000);
+                mazeController.stopMainMazeScene();
+                console.log('Game over fight interval');
+                return;
                 }
+            }
 
             }
 

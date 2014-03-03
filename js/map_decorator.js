@@ -236,7 +236,7 @@
           if (Math.random() < 0.1) {
             // Drop a spare part
             dMap[y2][x2] = SPARE_PART;
-          } else if (Math.random() < 0.005) {
+          } else if (Math.random() < 0.05) {
             dMap[y2][x2] = ENEMY;
           }
         }
