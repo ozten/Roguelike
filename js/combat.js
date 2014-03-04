@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
 
     var SPACE = 'S';
@@ -17,9 +17,12 @@
 
     function updateHealth() {
         $('#health span.val').text(playerHealth);
+        console.log('Health Updated');
     }
+
     function updateArmor() {
         $('#armor span.val').text(playerArmor);
+        console.log('Armor Updated');
     }
 
 
@@ -51,7 +54,6 @@
             console.log(ourAttack, '>=', enemyAttack);
             if (ourAttack >= enemyAttack) {
                 enemy.health -= 1;
-                ui.showMessage('You crushed the droid.');
                 if (enemy.health <= 0) {
                     ui.showMessage('Boom!');
                     map.setTileType(PATH, enemyCoords[0], enemyCoords[1]);
@@ -67,30 +69,35 @@
                 ui.showMessage('Enemy takes damage! ' + enemy.health);
             } else {
                 // combat and armor
+
+
                 if (playerArmor <= 0) {
                     playerHealth -= 1;
                     ui.showMessage('Ouch');
                     updateHealth();
-                    }
-                else {
+                } else {
                     playerArmor -= 1;
-                    updateArmor();
                     ui.showMessage('Clang');
-                    console.log('Lost 1 Armor');                
-            if (playerHealth <= 0) {
-                clearInterval(fightClubInt);
-                fightClubInt = undefined;
-                // TODO make a game over controller
-                setTimeout(function() {
-                    $('h1').text('Game Over').show();
-                }, 1000);
-                mazeController.stopMainMazeScene();
-                console.log('Game over fight interval');
-                return;
+                    updateArmor();
+                    console.log('Lost 1 Armor');
+
                 }
-            }
+
+                    if (playerHealth <= 0) {
+                        clearInterval(fightClubInt);
+                        fightClubInt = undefined;
+                        // TODO make a game over controller
+                        setTimeout(function () {
+                            $('h1').text('Game Over').show();
+                        }, 1000);
+                        mazeController.stopMainMazeScene();
+                        console.log('Game over fight interval');
+                        return;
+                    }
+                
 
             }
+
 
         } else {
             console.log('Moved, clearing fight interval');
@@ -101,7 +108,7 @@
     }
 
     window.combat = {
-        fight: function(ourCoords, theirCoords) {
+        fight: function (ourCoords, theirCoords) {
             var enemyKey = theirCoords[0] + ',' + theirCoords[1];
             if (!enemies[enemyKey]) {
                 enemies[enemyKey] = createRandEnemy(theirCoords);
@@ -110,7 +117,7 @@
             console.log("AOK ", fightClubInt);
             if (!fightClubInt) {
 
-                fightClubInt = setInterval(function() {
+                fightClubInt = setInterval(function () {
                     console.log('Fight club yall');
                     fightClub(ourCoords, enemy, theirCoords);
                 }, 1000);
