@@ -1,0 +1,31 @@
+/*
+  1) start at 0,0 which is the first rooms origin
+  2) choose a random room
+  3) choose a random rotation
+  4) place at the currentOrigin
+  5) considering the currentRooms' connections, choose an un-connected one
+  5.1) If no connections are available go to 14
+  6) Leave the room in that direction, marking it connected
+  7) update currentOrigin based on the new room, x or y may be negative
+
+  8) choose a random room
+  8.1) if no room, go to 17
+  9) choose a random rotation where connections are valid
+  test the following positions: (rotate, rotate, rotate, flip, rotate, rotate)
+  against any existing rooms which are N, E, S, or W of our room
+  10) keep track of each viable position
+  11) pick a random one
+  12) if none, place room in bad fits list, go to 8
+  13) place room at currentOrigin, go to 5
+  14) from the available list of un-connected connections, choose one with an empty ajacent room
+  15) if none, go to 17
+  16) go to 8
+  17) finished clean up map
+
+  clean up map
+  1) find lowest x, y coordinates
+  2) find highest x, y
+  3) create map tiles and copy tiles
+
+  place rooms in 'bad fits list' back into room pool
+*/
