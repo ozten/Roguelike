@@ -1,0 +1,17 @@
+{
+    "name": "roomr Roguelike",
+    "description": "A Game",
+    "developer": {
+      "name": "Austin King",
+      "url": "http://roomr.co"
+    },
+    "launch_path": "/",
+    "icons": {
+        "256": "/img/icon/Roguelike256.png",
+        "128": "/img/icon/Roguelike128.png",
+        "60": "/img/icon/Roguelike60.png",
+        "30": "/img/icon/Roguelike30.png"
+    },
+    "orientation": ["landscape"],
+    "fullscreen": "true"
+}
