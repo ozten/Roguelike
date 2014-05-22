@@ -12,7 +12,7 @@
     var ENEMY = 'e';
 
     var playerDamage = null;
-    var playerHealth = 5;
+    var playerHealth = 10;
     var playerArmor = 2;
 
     function updateHealth() {
@@ -54,8 +54,9 @@
             console.log(ourAttack, '>=', enemyAttack);
             if (ourAttack >= enemyAttack) {
                 enemy.health -= 1;
+                ui.showMessage('Direct hit')
                 if (enemy.health <= 0) {
-                    ui.showMessage('Boom!');
+                    ui.showMessage('It is dead.');
                     map.setTileType(PATH, enemyCoords[0], enemyCoords[1]);
                     window.camera.draw();
                     console.log('AOK', fightClubInt);
@@ -65,8 +66,6 @@
                     console.log('AOK enemy dead, clearing fight interval');
                     return;
                 }
-                console.log('Enemy takes damage! ' + enemy.health);
-                ui.showMessage('Enemy takes damage! ' + enemy.health);
             } else {
                 // combat and armor
 
@@ -84,6 +83,7 @@
                 }
 
                     if (playerHealth <= 0) {
+                        ui.showMessage('Game Over')
                         clearInterval(fightClubInt);
                         fightClubInt = undefined;
                         // TODO make a game over controller
